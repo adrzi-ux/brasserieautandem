@@ -28,10 +28,40 @@
 
 ## Plan rebuild
 
-### Étape 1 — Récup Wayback (2022)
-- [ ] Snapshot le plus récent (probablement 2021-2022)
-- [ ] Récupérer : menu, carte des vins, page contact, photos, blog si existant
-- [ ] **Décision stratégique** : rebuild en "vraie brasserie" (avec menus fictifs cohérents) OU en "guide restauration locale" ?
+### ✅ Étape 1 — Récup Wayback (FAIT 2026-05-19)
+5 URLs capturées en 2022 (voir `wayback/brasserieautandem.fr-wayback-urls.tsv`) :
+- `https://brasserieautandem.fr/` (home)
+- `https://brasserieautandem.fr/diaporama/` (galerie photos)
+- `https://brasserieautandem.fr/notre-carte/` (menu)
+- `https://brasserieautandem.fr/mentions-legales/`
+- `https://brasserieautandem.fr/politique-de-cookies-ue/`
+
+### ✅ Étape 2 — Cross-ref Ahrefs Pages (FAIT 2026-05-19)
+**La home concentre 100% du jus SEO :**
+
+| URL | RD | DoF | Top DR | Tier |
+|---|---|---|---|---|
+| https://brasserieautandem.fr/ | **103** | **86** | **93** | **TIER 1** |
+| http://brasserieautandem.fr/ | 7 | 6 | 52 | (merge HTTPS) |
+| autres pages | 0 | 0 | - | TIER 2 (continuité Wizards) |
+
+→ Top DR 93 = très probablement `festival-piano.com` (DR 58 vu en Site Explorer, peut-être autre BL fort)
+
+### Étape 3 — Décision stratégique
+**Option A — Brasserie "fidèle"** : rebuild proche du site original (carte/diaporama/mentions/cookies) → simple, rapide
+**Option B — Guide gastronomique régional** : élargir la niche pour plus de volume éditorial → plus de potentiel vente de liens
+
+→ **Recommandation : commencer par A puis évoluer vers B** (continuité Wizards d'abord, élargissement après indexation à 30j).
+
+### Étape 4 — Setup tech (à venir)
+- [ ] DNS + VPS + LEMP + WP
+- [ ] **Permalink Manager** pour slugs exacts
+- [ ] Variables :
+  ```
+  DOMAIN=brasserieautandem.fr
+  VPS_IP=
+  WP_PATH=/var/www/brasserieautandem
+  ```
 
 ### Étape 2 — Setup tech
 - [ ] VPS + DNS + LEMP + WP
