@@ -53,14 +53,43 @@
 
 → **Recommandation : commencer par A puis évoluer vers B** (continuité Wizards d'abord, élargissement après indexation à 30j).
 
-### Étape 4 — Setup tech (à venir)
-- [ ] DNS + VPS + LEMP + WP
-- [ ] **Permalink Manager** pour slugs exacts
-- [ ] Variables :
+### ✅ Étape 2bis — MVP site Astro (FAIT 2026-05-20)
+
+Direction stack actée : **Astro statique + WP headless blog uniquement** (méthode Olivier/ARS), pas WordPress full.
+
+Pipeline réalisé :
+1. Brief Otomatic préparé (`otomatic-brief.md`) — non utilisé in fine
+2. Brief Claude Design préparé (`claude-design-brief.md`) — utilisé
+3. Design itéré dans `claude.ai/design` (direction éditoriale chaude terracotta validée)
+4. Export bundle Claude Design via API Anthropic (`api.anthropic.com/v1/design/h/{hash}`)
+5. Implémentation Astro complète dans `site-astro/`
+
+**État `site-astro/`** :
+- 10 pages MVP buildent en 1.48s (224 KB total, 0 erreur)
+- 11 composants Astro réutilisables (Header, Footer, Newsletter, CTABanner, RecipeCard, CategoryCard, ProducerCard, CategoryHero, Stamp, Placeholder, Icon)
+- CSS designer copié tel quel (`global.css`, 1248 lignes)
+- Brand préservée : Brasserie Au Tandem · 16 rue de l'église · La Roque-d'Anthéron · 13640 · 04 42 59 68 49
+- Pas de Tailwind ajouté (CSS designer suffit, pas de redondance)
+
+**Pages générées** : `/`, `/recettes/`, `/recettes-provencales/`, `/recettes-mediterraneennes/`, `/recettes-saisonnieres/`, `/accords-mets-vins/`, `/producteurs-locaux/`, `/notre-brasserie/`, `/a-propos/`, `/contact/`
+
+### Étape 4 — Setup tech (à venir, simplifié vs plan initial)
+
+Stack Astro = pas de WP full nécessaire. Options déploiement :
+
+- **Cloudflare Pages (recommandé)** — gratuit, build auto sur push GitHub, HTTPS, CDN global. Build : `cd site-astro && npm install && npm run build`. Output : `site-astro/dist/`
+- **VPS Nginx** (cohérent boutique-catea) — déployer le `dist/` statique
+- **Netlify / Vercel** — alternatives équivalentes
+
+Pour le blog futur (V2) : WordPress headless connecté via REST API.
+
+- [ ] Choisir l'hébergement
+- [ ] Configurer DNS `brasserieautandem.fr` → hébergement
+- [ ] HTTPS (Cloudflare Pages le fait auto, sinon Let's Encrypt)
+- [ ] Variables environnement éventuelles :
   ```
   DOMAIN=brasserieautandem.fr
-  VPS_IP=
-  WP_PATH=/var/www/brasserieautandem
+  WP_HEADLESS_URL=  # plus tard pour /blog/
   ```
 
 ### Étape 2 — Setup tech
@@ -72,24 +101,16 @@
   WP_PATH=/var/www/brasserieautandem
   ```
 
-### Étape 3 — Content (orientations possibles)
+### ✅ Étape 3 — Content (orientation actée 2026-05-20)
 
-**Option A — Brasserie "fictive" cohérente** (plus simple, rebuild fidèle)
-- Page menu (entrée/plat/dessert + vins)
-- Page brunch / formule midi
-- Galerie photos (libres de droits cuisine provençale)
-- Histoire de la brasserie
-- Adresse fictive crédible (autour de Lauris/La Roque-d'Anthéron)
+**Pivot final : Guide gastronomie + Recettes** (vs Option A brasserie simple ou Option B hyperlocal Luberon)
 
-**Option B — Guide gastronomique régional** (plus large, plus de potentiel)
-- Top restaurants Luberon
-- Reviews brasseries Provence
-- Guide vins du Luberon (cohérent BL viticulture)
-- Recettes provençales
-- Festivals/événements gastronomiques (Festival Piano = lien naturel)
-- Tourisme food Provence
+Raisons :
+- Volume éditorial massif possible (50+ recettes futures = longue traîne énorme)
+- Brand Brasserie Au Tandem préservée comme ancrage HORECA légitime (cohérent BL d'origine)
+- Cohérence thématique mars 2024 OK (on reste cuisine/HORECA)
 
-→ **Recommandation : Option B** (plus de volume éditorial, meilleur ROI vente de liens).
+Structure MVP 10 pages livrée (cf. Étape 2bis ci-dessus). Roadmap content V2-V3 dans `otomatic-brief.md` section 10.
 
 ### Étape 4 — Clients potentiels
 - Tour-opérateurs Provence / Luberon
