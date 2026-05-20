@@ -1,0 +1,25 @@
+---
+import Placeholder from './Placeholder.astro';
+import Icon from './Icon.astro';
+
+type Tone = 'warm' | 'olive' | 'cocoa' | 'sand' | 'lav' | 'rose';
+
+interface Props {
+  name: string;
+  role: string;
+  village: string;
+  tone?: Tone;
+  angle?: number;
+}
+
+const { name, role, village, tone = 'warm', angle = 30 } = Astro.props;
+---
+
+<article class="producer-card">
+  <div class="portrait">
+    <Placeholder tone={tone} angle={angle} label={`Portrait · ${name}`} />
+  </div>
+  <h3 class="name">{name}</h3>
+  <div class="role">{role}</div>
+  <div class="village"><Icon name="pin" size={11} stroke={1.4} /> {village}</div>
+</article>

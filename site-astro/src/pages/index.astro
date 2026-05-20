@@ -1,0 +1,203 @@
+---
+import Site from '~/layouts/Site.astro';
+import Placeholder from '~/components/Placeholder.astro';
+import Stamp from '~/components/Stamp.astro';
+import CategoryCard from '~/components/CategoryCard.astro';
+import RecipeCard from '~/components/RecipeCard.astro';
+import ProducerCard from '~/components/ProducerCard.astro';
+import CTABanner from '~/components/CTABanner.astro';
+import Newsletter from '~/components/Newsletter.astro';
+import { CATEGORIES, FEATURED_RECIPES, PRODUCERS, PAIRINGS, SITE } from '~/data/site';
+---
+
+<Site title="Guide gastronomie & recettes provençales" description="Recettes provençales, accords mets-vins et producteurs du Luberon. Un magazine éditorial porté par la Brasserie Au Tandem à La Roque-d'Anthéron." activePage="recettes">
+  <section class="hero">
+    <div class="container">
+      <div class="hero-eyebrow-row">
+        <div class="eyebrow">
+          <span class="dot"></span>
+          Numéro N°06 · Mai–Juin 2026
+        </div>
+        <div class="eyebrow" style="color: var(--ink-soft);">
+          {SITE.address.city} · {SITE.address.zip}
+        </div>
+      </div>
+      <div class="hero-grid">
+        <div style="position: relative;">
+          <h1 class="h-editorial">
+            Le goût <em>vif</em><br/>
+            de la <em>Provence</em>,<br/>
+            écrit à deux.
+          </h1>
+          <Stamp
+            text="BRASSERIE AU TANDEM · LA ROQUE-D'ANTHÉRON ·"
+            center="N°06"
+            size={132}
+            rot={-12}
+            style="position: absolute; right: 0; top: -20px;"
+          />
+          <div class="hero-meta">
+            <div><strong>Recettes</strong>94 fiches éprouvées</div>
+            <div><strong>Producteurs</strong>28 maisons du Luberon</div>
+            <div><strong>Brasserie</strong>Ouverte dès 6h30</div>
+          </div>
+          <div class="hero-ctas">
+            <a href="/recettes/" class="btn btn-primary">Toutes les recettes <span class="arrow">→</span></a>
+            <a href="/notre-brasserie/" class="btn btn-ghost">Notre brasserie</a>
+          </div>
+        </div>
+        <div class="hero-image-wrap">
+          <div style="aspect-ratio: 4 / 5;">
+            <span class="tag">À la une</span>
+            <Placeholder tone="rose" label="Hero · Aïoli traditionnel, terrasse au matin" />
+          </div>
+          <div class="hero-caption">
+            <span class="num">N°01</span>
+            <span>L'aïoli du dimanche, photographié sur la terrasse du Tandem, mai 2026.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="hr-thin" />
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="left">
+          <div class="eyebrow"><span class="dot"></span>Par où commencer</div>
+          <h2 class="h-section" style="margin-top: 18px;">
+            Quatre <em class="flourish">portes d'entrée</em><br />vers la cuisine du Sud.
+          </h2>
+        </div>
+        <div class="right">
+          <p class="lede">
+            Choisissez par tradition, par saison ou par accord. Toutes les recettes
+            sont testées en cuisine, pas seulement écrites.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="cat-grid">
+        {CATEGORIES.map((c) => <CategoryCard {...c} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="section-head">
+        <div class="left">
+          <div class="eyebrow"><span class="dot"></span>Carnet récent</div>
+          <h2 class="h-section" style="margin-top: 18px;">
+            Six recettes <em class="flourish">qu'on a faites cette semaine</em>.
+          </h2>
+        </div>
+        <div class="right">
+          <a href="/recettes/" class="btn btn-ghost">Toutes les recettes <span class="arrow">→</span></a>
+        </div>
+      </div>
+      <div class="recipe-grid">
+        {FEATURED_RECIPES.map((r) => <RecipeCard {...r} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background: var(--cream);">
+    <div class="container">
+      <div class="feature-row">
+        <div style="aspect-ratio: 5 / 4; position: relative;">
+          <Placeholder tone="warm" label="Reportage · Jean Bertaud, oléiculteur à Cucuron" />
+          <Stamp
+            text="REPORTAGE · OLÉICULTEUR · CUCURON ·"
+            center="N°03"
+            size={120}
+            color="brown"
+            rot={6}
+            style="position: absolute; right: -30px; bottom: -30px;"
+          />
+        </div>
+        <div class="feature-text">
+          <div class="eyebrow"><span class="dot"></span>Carnet de producteur</div>
+          <h2 class="h-section" style="margin: 18px 0 0; max-width: 14ch;">
+            L'huile, <em class="flourish">avant tout le reste.</em>
+          </h2>
+          <div class="body" style="margin-top: 24px;">
+            <p>Jean Bertaud presse ses olives à froid, deux semaines après la récolte, dans un moulin tenu par sa famille depuis 1932. Quand on cuisine son huile, on cuisine d'abord son verger.</p>
+            <p>C'est la base de notre cuisine au Tandem : pas de marque générique, pas de bouteille anonyme. Un nom, une route, une poignée de main.</p>
+          </div>
+          <div style="margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="/producteurs-locaux/" class="btn btn-primary">Lire le reportage <span class="arrow">→</span></a>
+            <a href="/producteurs-locaux/" class="btn btn-ghost">Tous les producteurs</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0; background: var(--cream);">
+    <div class="container">
+      <div class="section-head">
+        <div class="left">
+          <div class="eyebrow"><span class="dot"></span>Le carnet d'adresses</div>
+          <h2 class="h-section" style="margin-top: 18px;">
+            Les mains derrière <em class="flourish">nos assiettes</em>.
+          </h2>
+        </div>
+        <div class="right">
+          <a href="/producteurs-locaux/" class="btn btn-ghost">Voir la carte <span class="arrow">→</span></a>
+        </div>
+      </div>
+      <div class="producer-strip">
+        {PRODUCERS.map((p, i) => <ProducerCard {...p} angle={30 + i * 12} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="wine-block">
+    <div class="container">
+      <div class="section-head">
+        <div class="left">
+          <div class="eyebrow"><span class="dot"></span>Accords mets-vins</div>
+          <h2 class="h-section" style="margin-top: 18px;">
+            Cinq accords <em class="flourish">à essayer ce mois-ci</em>.
+          </h2>
+        </div>
+        <div class="right">
+          <p class="lede">
+            Les vins du Sud, choisis par notre sommelier — Côtes-du-Rhône, Bandol,
+            Cassis, et quelques cuvées de Bellet pour la curiosité.
+          </p>
+        </div>
+      </div>
+      <table class="wine-table">
+        <thead>
+          <tr>
+            <th style="width: 28%;">Plat</th>
+            <th style="width: 22%;">Vin suggéré</th>
+            <th style="width: 18%;">Appellation</th>
+            <th>Pourquoi ça marche</th>
+          </tr>
+        </thead>
+        <tbody>
+          {PAIRINGS.map((p) => (
+            <tr>
+              <td class="dish">{p.dish}</td>
+              <td class="wine">{p.wine}</td>
+              <td class="region">{p.region}</td>
+              <td class="note">{p.note}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div style="margin-top: 40px;">
+        <a href="/accords-mets-vins/" class="btn btn-on-dark">Guide complet des accords <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <CTABanner />
+  <Newsletter />
+</Site>

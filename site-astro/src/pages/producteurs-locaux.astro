@@ -1,0 +1,84 @@
+---
+import Site from '~/layouts/Site.astro';
+import Stamp from '~/components/Stamp.astro';
+import Placeholder from '~/components/Placeholder.astro';
+import ProducerCard from '~/components/ProducerCard.astro';
+import CTABanner from '~/components/CTABanner.astro';
+import Newsletter from '~/components/Newsletter.astro';
+
+const producers = [
+  { name: 'Jean Bertaud',       role: "Huile d'olive AOP",    village: 'Cucuron',   tone: 'olive' as const, x: '32%', y: '48%' },
+  { name: 'Maryse Ferrand',     role: 'Chèvres fermiers',     village: 'Vaugines',  tone: 'warm' as const,  x: '44%', y: '38%' },
+  { name: 'Domaine Reibaud',    role: 'Vigneron biologique',  village: 'Lourmarin', tone: 'rose' as const,  x: '38%', y: '52%' },
+  { name: 'Famille Sicard',     role: 'Herbes du Luberon',    village: 'Pertuis',   tone: 'lav' as const,   x: '58%', y: '62%' },
+  { name: 'Pascal Roux',        role: 'Charcutier',           village: 'Apt',       tone: 'cocoa' as const, x: '56%', y: '32%' },
+  { name: 'Atelier Brun',       role: 'Boulanger au levain',  village: 'Cadenet',   tone: 'warm' as const,  x: '26%', y: '56%' },
+  { name: 'Jardins de Régine',  role: 'Maraîchère bio',       village: 'Lauris',    tone: 'olive' as const, x: '30%', y: '38%' },
+  { name: 'Pierre Calas',       role: 'Apiculteur',           village: 'Ansouis',   tone: 'sand' as const,  x: '48%', y: '58%' },
+];
+
+const filters = ['Tous', "Huile d'olive", 'Fromages', 'Charcuterie', 'Vins', 'Herbes', 'Pain', 'Maraîchage', 'Miel'];
+---
+
+<Site title="Producteurs locaux" description="28 producteurs du Luberon entre Cucuron et Pertuis. Huile d'olive AOP, fromages, charcuterie, vins, herbes." activePage="producteurs">
+  <section class="section" style="padding-top: 60px; padding-bottom: 30px;">
+    <div class="container">
+      <div class="crumb">
+        <a href="/">Accueil</a><span class="sep">/</span><span>Producteurs locaux</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 60px; align-items: end;">
+        <h1 class="h-page" style="max-width: 16ch;">
+          Le carnet <em>d'adresses</em><br/>du Luberon.
+        </h1>
+        <p class="lede" style="max-width: 40ch;">
+          28 producteurs entre Cucuron et Pertuis. Chez la plupart, vous pouvez
+          acheter directement, sur rendez-vous ou les jours de marché.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 24px; padding-bottom: 30px;">
+    <div class="container">
+      <div class="map-block" style="aspect-ratio: 16/9; position: relative;">
+        <Placeholder tone="olive" label="Carte du Luberon · Cucuron — Lourmarin — Pertuis — Ansouis" />
+        {producers.map((p, i) => (
+          <span class="map-pin" style={`left: ${p.x}; top: ${p.y};`}>{i + 1}</span>
+        ))}
+        <Stamp text="LUBERON CENTRAL · 28 ADRESSES ·" center="✦" size={120} color="brown" rot={-6}
+          style="position: absolute; left: 24px; bottom: 24px;" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 16px;">
+    <div class="container">
+      <div style="display: flex; justify-content: space-between; align-items: end; margin-bottom: 36px; gap: 30px;">
+        <div>
+          <div class="eyebrow"><span class="dot"></span>Les visages</div>
+          <h2 class="h-section" style="margin-top: 18px;">
+            Huit portraits <em class="flourish">pour commencer</em>.
+          </h2>
+        </div>
+        <div class="chips">
+          {filters.map((f, i) => (
+            <button class={`chip ${i === 0 ? 'active' : ''}`}>{f}</button>
+          ))}
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(24px, 2.4vw, 36px);">
+        {producers.map((p, i) => (
+          <ProducerCard name={p.name} role={p.role} village={p.village} tone={p.tone} angle={30 + i * 11} />
+        ))}
+      </div>
+
+      <div style="margin-top: 64px; text-align: center;">
+        <a href="#" class="btn btn-ghost">Voir les 20 autres producteurs</a>
+      </div>
+    </div>
+  </section>
+
+  <CTABanner />
+  <Newsletter />
+</Site>

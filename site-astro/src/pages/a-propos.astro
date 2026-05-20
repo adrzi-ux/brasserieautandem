@@ -1,0 +1,98 @@
+---
+import Site from '~/layouts/Site.astro';
+import Stamp from '~/components/Stamp.astro';
+import Placeholder from '~/components/Placeholder.astro';
+import CTABanner from '~/components/CTABanner.astro';
+import Newsletter from '~/components/Newsletter.astro';
+
+const values = [
+  { num: 'I.',   label: 'Le territoire',   body: "Chaque recette vient d'un village, d'une route, d'un climat. Pas de cuisine hors-sol, jamais." },
+  { num: 'II.',  label: "L'artisanat",     body: "On nomme les producteurs, on cite les moulins, on goûte avant d'écrire. La provenance n'est pas un argument marketing." },
+  { num: 'III.', label: 'La transmission', body: "Les recettes anciennes ne sont pas figées : on les note, on les adapte, on les remet sur la table." },
+];
+---
+
+<Site title="À propos" description="Brasserie Au Tandem : une brasserie de village et un magazine éditorial, tenus à deux mains. Camille et Léo, La Roque-d'Anthéron." activePage="apropos">
+  <section class="section" style="padding-top: 60px; padding-bottom: 30px;">
+    <div class="container">
+      <div class="crumb">
+        <a href="/">Accueil</a><span class="sep">/</span><span>À propos</span>
+      </div>
+      <h1 class="h-page" style="max-width: 16ch;">
+        Une <em>brasserie</em><br />
+        et un <em>magazine</em>,<br />
+        tenus à deux.
+      </h1>
+    </div>
+  </section>
+
+  <section class="bleed-quote">
+    <div class="container">
+      <div class="two-col">
+        <div>
+          <div class="eyebrow"><span class="dot"></span>Notre vision</div>
+          <div class="pull-quote" style="margin-top: 30px;">
+            Cuisiner ce qu'on connaît, raconter ce qu'on aime.
+          </div>
+          <div class="quote-source">Manifeste — Au Tandem, 2026</div>
+        </div>
+        <div class="intro-prose" style="padding-top: 14px;">
+          <p class="dropcap">
+            Au Tandem est né d'une habitude : à La Roque-d'Anthéron, on parle de bouffe
+            partout — sur la terrasse, au marché, chez le boucher. À force d'écouter,
+            on a voulu écrire. Ce site est ce carnet, rendu public.
+          </p>
+          <p>
+            Nous ne sommes pas un restaurant qui blogue ; nous sommes un magazine
+            qui se trouve avoir un comptoir, à 16 rue de l'église. Les deux se
+            nourrissent — au sens propre.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="eyebrow"><span class="dot"></span>Nos trois principes</div>
+      <h2 class="h-section" style="margin-top: 18px; margin-bottom: 48px; max-width: 16ch;">
+        Ce qu'on tient pour <em class="flourish">vrai</em>.
+      </h2>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);">
+        {values.map((v) => (
+          <div style="background: var(--paper); padding: 44px 32px; min-height: 280px;">
+            <div class="serif" style="font-style: italic; font-size: 56px; color: var(--terracotta-deep); line-height: 1;">{v.num}</div>
+            <h3 class="serif" style="font-size: 30px; margin: 16px 0 14px; line-height: 1.1;">{v.label}</h3>
+            <p style="color: var(--ink-soft); font-size: 15px; line-height: 1.55; max-width: 30ch;">{v.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background: var(--cream);">
+    <div class="container">
+      <div class="feature-row">
+        <div style="aspect-ratio: 1 / 1; position: relative;">
+          <Placeholder tone="warm" label="Portrait double · Camille & Léo, La Roque-d'Anthéron" />
+          <Stamp text="LA ROQUE-D'ANTHÉRON · DEPUIS 2019 ·" center="N°1" size={120}
+            color="brown" rot={-8}
+            style="position: absolute; left: -36px; bottom: -28px;" />
+        </div>
+        <div class="feature-text">
+          <div class="eyebrow"><span class="dot"></span>Les fondateurs</div>
+          <h2 class="h-section" style="margin: 18px 0 0; max-width: 16ch;">
+            Camille &amp; Léo, <em class="flourish">à deux mains</em>.
+          </h2>
+          <div class="body" style="margin-top: 24px;">
+            <p>Camille tient la cuisine. Léo écrit. On a repris la brasserie en 2019, en a fait un comptoir où l'on peut prendre un café à 6h30 ou une daube à 13h.</p>
+            <p>Le tandem, c'est la métaphore qu'on n'a pas pu éviter : deux selles, un seul mouvement. La cuisine et l'écriture, dans la même direction.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTABanner />
+  <Newsletter />
+</Site>

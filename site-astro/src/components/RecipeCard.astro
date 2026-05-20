@@ -1,0 +1,41 @@
+---
+import Placeholder from './Placeholder.astro';
+import Icon from './Icon.astro';
+
+type Tone = 'warm' | 'olive' | 'cocoa' | 'sand' | 'lav' | 'rose';
+
+interface Props {
+  tag?: string;
+  title: string;
+  time?: string;
+  diff?: string;
+  tone?: Tone;
+  num?: string;
+  showNumber?: boolean;
+  href?: string;
+}
+
+const { tag, title, time, diff, tone = 'warm', num, showNumber = true, href = '#' } = Astro.props;
+---
+
+<a href={href} class="recipe-card">
+  <div class="img-wrap">
+    <Placeholder tone={tone} label={`Recette · ${title}`} />
+    {tag && <span class="pill">{tag}</span>}
+    {showNumber && num && <span class="number">{num}</span>}
+  </div>
+  <h3>{title}</h3>
+  <div class="meta">
+    {time && (
+      <span><Icon name="clock" size={12} stroke={1.4} /> {time}</span>
+    )}
+    {time && diff && <span class="dot"></span>}
+    {diff && (
+      <span><Icon name="flame" size={12} stroke={1.4} /> {diff}</span>
+    )}
+  </div>
+</a>
+
+<style>
+  a.recipe-card { display: block; color: inherit; text-decoration: none; }
+</style>

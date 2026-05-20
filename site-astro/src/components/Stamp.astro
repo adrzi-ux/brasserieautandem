@@ -1,0 +1,50 @@
+---
+interface Props {
+  text?: string;
+  center?: string;
+  size?: number;
+  color?: 'terracotta' | 'brown' | 'olive';
+  rot?: number;
+  style?: string;
+  class?: string;
+}
+
+const {
+  text = 'ESSAYÉ EN CUISINE · MAISON ·',
+  center,
+  size = 120,
+  color = 'terracotta',
+  rot = -8,
+  style = '',
+  class: className = '',
+} = Astro.props;
+
+const fills = {
+  terracotta: '#A66023',
+  brown: '#3D2817',
+  olive: '#5E6738',
+};
+const fill = fills[color];
+const r1 = 49, r2 = 44, rText = 39, cx = 50, cy = 50;
+const id = 'stp-' + Math.random().toString(36).slice(2, 8);
+
+const inlineStyle = `--stamp-rot: ${rot}deg; color: ${fill}; width: ${size}px; height: ${size}px; ${style}`;
+---
+
+<span class={`stamp ${className}`} style={inlineStyle}>
+  <svg viewBox="0 0 100 100" width={size} height={size}>
+    <defs>
+      <path id={id} d={`M ${cx} ${cy} m -${rText},0 a ${rText},${rText} 0 1,1 ${rText * 2},0 a ${rText},${rText} 0 1,1 -${rText * 2},0`} />
+    </defs>
+    <circle cx={cx} cy={cy} r={r1} fill="none" stroke="currentColor" stroke-width="1.5" />
+    <circle cx={cx} cy={cy} r={r2} fill="none" stroke="currentColor" stroke-width="0.6" />
+    <text fill="currentColor" style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 7.5px; font-weight: 500; letter-spacing: 0.22em;">
+      <textPath href={`#${id}`} startOffset="0">{text}</textPath>
+    </text>
+    {center && (
+      <text x={cx} y={cy + 3} text-anchor="middle" fill="currentColor" style="font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 18px; font-weight: 500;">
+        {center}
+      </text>
+    )}
+  </svg>
+</span>

@@ -1,0 +1,208 @@
+---
+import Site from '~/layouts/Site.astro';
+import Stamp from '~/components/Stamp.astro';
+import Placeholder from '~/components/Placeholder.astro';
+import CTABanner from '~/components/CTABanner.astro';
+import Newsletter from '~/components/Newsletter.astro';
+import { SITE } from '~/data/site';
+
+const entrees = [
+  { name: "Tapenade noire d'Aups, fougasse maison", desc: 'Olives de chez Bertaud, anchois, capres.', price: '8 €' },
+  { name: 'Soupe au pistou',                        desc: 'Légumes du jardin de Régine, pistou frais.', price: '10 €' },
+  { name: "Salade de chèvre rôti, miel d'Ansouis",  desc: 'Chèvre Maryse Ferrand, miel Pierre Calas, mesclun.', price: '12 €' },
+];
+
+const plats = [
+  { name: 'Daube avignonnaise, polenta crémeuse',     desc: 'Joue de bœuf braisée 3h, vin de Vacqueyras, olives.', price: '21 €' },
+  { name: 'Aïoli traditionnel du vendredi',           desc: 'Morue, légumes vapeur, ail rose de Lautrec. Servi le vendredi midi.', price: '19 €' },
+  { name: 'Pieds-paquets marseillais',                desc: "Sauce tomate-vin blanc, recette d'Yvonne, 1972.", price: '22 €' },
+  { name: 'Tian de légumes du soleil & œuf mollet',   desc: 'Aubergines, courgettes, tomates de Lauris.', price: '16 €' },
+];
+
+const desserts = [
+  { name: 'Tarte tropézienne minute',                   desc: "Brioche fraîche, crème mousseline à la fleur d'oranger.", price: '9 €' },
+  { name: "Glace au miel d'Ansouis, brisures d'amande", desc: 'Glace maison, miel Calas, amandes torréfiées.', price: '7 €' },
+];
+
+const team = [
+  { role: 'Cuisine',          name: 'Camille Aubert', quote: '"Je ne cuisine que ce que je connais. Le reste, je l\'apprends en goûtant."', tone: 'warm' as const },
+  { role: 'Écriture & salle', name: 'Léo Pinault',    quote: '"On écrit les recettes comme on parle à un ami au comptoir."', tone: 'cocoa' as const },
+  { role: 'Salle & vin',      name: 'Inès Cabrol',    quote: '"Le bon vin, c\'est celui qui se laisse oublier."', tone: 'rose' as const },
+];
+---
+
+<Site title="Notre brasserie" description="Brasserie Au Tandem, 16 rue de l'église, La Roque-d'Anthéron. Ouverte dès 6h30. Cuisine provençale traditionnelle." activePage="brasserie">
+  <section class="fb-hero">
+    <div class="bg">
+      <Placeholder tone="cocoa" label="Hero · Terrasse du Tandem au matin, 16 rue de l'église" />
+    </div>
+    <div class="container">
+      <div class="crumb">
+        <a href="/">Accueil</a><span class="sep">/</span><span>Notre brasserie</span>
+      </div>
+      <div style="position: relative;">
+        <h1 class="h-page" style="max-width: 18ch;">
+          Une brasserie de <em>village</em>,<br/>
+          ouverte dès <em>6h30</em>.
+        </h1>
+        <p class="lede">
+          À {SITE.address.city}, à dix minutes du Luberon. Un comptoir, deux salles,
+          une terrasse à l'ombre des platanes.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="recipe-bar" style="top: 0; position: relative;">
+    <div class="container">
+      <div class="stat">
+        <div class="k">Adresse</div>
+        <div class="v" style="font-size: 18px;">{SITE.address.street}</div>
+      </div>
+      <div class="stat">
+        <div class="k">Téléphone</div>
+        <div class="v" style="font-size: 18px;">{SITE.phone}</div>
+      </div>
+      <div class="stat">
+        <div class="k">Aujourd'hui</div>
+        <div class="v" style="font-size: 18px;">6h30 — 22h</div>
+      </div>
+      <div class="stat">
+        <div class="k">Quartier</div>
+        <div class="v" style="font-size: 18px;">Centre-village</div>
+      </div>
+      <a href="/contact/" class="btn btn-primary">Réserver <span class="arrow">→</span></a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="two-col">
+        <div>
+          <div class="eyebrow"><span class="dot"></span>Notre histoire</div>
+          <h2 class="h-section" style="margin-top: 18px; max-width: 14ch;">
+            Reprise en <em class="flourish">2019</em>, à deux mains.
+          </h2>
+        </div>
+        <div class="intro-prose">
+          <p class="dropcap">
+            L'établissement existe depuis 1932 — sept patrons l'ont précédé, dont les
+            derniers, Yvonne et Henri, l'ont tenu pendant trente-deux ans. Quand Yvonne
+            a pris sa retraite, on a repris la maison, en gardant son zinc, ses
+            tabourets et la recette des pieds-paquets.
+          </p>
+          <p>
+            Ce qui a changé : le café est désormais en grains de chez Tomas Carbonnel
+            (Avignon), les vins sont biologiques pour la plupart, et la cuisine ouvre
+            à midi pour ceux qui n'ont pas réservé.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background: var(--cream);">
+    <div class="container">
+      <div class="section-head">
+        <div class="left">
+          <div class="eyebrow"><span class="dot"></span>La carte</div>
+          <h2 class="h-section" style="margin-top: 18px;">
+            Ce qu'on sert <em class="flourish">cette semaine</em>.
+          </h2>
+        </div>
+        <div class="right" style="text-align: left; max-width: 30ch;">
+          <p class="lede">
+            La carte change toutes les trois semaines, selon ce que les producteurs
+            apportent. Ce sont nos best-sellers du moment.
+          </p>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 60px;">
+        <div>
+          <div class="eyebrow" style="margin-bottom: 24px;"><span class="dot"></span>Entrées</div>
+          <div class="menu-list">
+            {entrees.map((m) => (
+              <div class="menu-item">
+                <div>
+                  <div class="dish">{m.name}</div>
+                  <div class="desc">{m.desc}</div>
+                </div>
+                <div class="price">{m.price}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <div class="eyebrow" style="margin-bottom: 24px;"><span class="dot"></span>Plats</div>
+          <div class="menu-list">
+            {plats.map((m) => (
+              <div class="menu-item">
+                <div>
+                  <div class="dish">{m.name}</div>
+                  <div class="desc">{m.desc}</div>
+                </div>
+                <div class="price">{m.price}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <div class="eyebrow" style="margin-bottom: 24px;"><span class="dot"></span>Desserts</div>
+          <div class="menu-list">
+            {desserts.map((m) => (
+              <div class="menu-item">
+                <div>
+                  <div class="dish">{m.name}</div>
+                  <div class="desc">{m.desc}</div>
+                </div>
+                <div class="price">{m.price}</div>
+              </div>
+            ))}
+          </div>
+
+          <div style="margin-top: 50px; padding: 24px; background: var(--paper); border: 1px solid var(--rule); position: relative;">
+            <Stamp text="MAISON · TESTÉ EN CUISINE ·" center="✓" size={88} color="terracotta" rot={5}
+              style="position: absolute; right: -16px; top: -28px;" />
+            <div class="eyebrow"><span class="dot"></span>Vins du moment</div>
+            <p class="serif" style="margin-top: 12px; font-style: italic; font-size: 17px; color: var(--ink-soft); line-height: 1.45;">
+              Côtes-du-Rhône Vacqueyras 2022, Bandol blanc Tempier 2021, Cassis blanc
+              Clos Sainte-Magdeleine. Verres entre 5 € et 9 €.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="left">
+          <div class="eyebrow"><span class="dot"></span>L'équipe</div>
+          <h2 class="h-section" style="margin-top: 18px;">
+            Quatre personnes <em class="flourish">en cuisine et en salle</em>.
+          </h2>
+        </div>
+      </div>
+
+      <div class="team-grid">
+        {team.map((m) => (
+          <div class="team-card">
+            <div class="portrait">
+              <Placeholder tone={m.tone} label={`Portrait · ${m.name}`} />
+            </div>
+            <div class="role">{m.role}</div>
+            <h3 class="name">{m.name}</h3>
+            <div class="quote">{m.quote}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTABanner />
+  <Newsletter />
+</Site>

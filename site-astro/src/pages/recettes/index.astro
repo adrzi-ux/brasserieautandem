@@ -1,0 +1,73 @@
+---
+import Site from '~/layouts/Site.astro';
+import Stamp from '~/components/Stamp.astro';
+import CategoryCard from '~/components/CategoryCard.astro';
+import RecipeCard from '~/components/RecipeCard.astro';
+import CTABanner from '~/components/CTABanner.astro';
+import Newsletter from '~/components/Newsletter.astro';
+import { CATEGORIES } from '~/data/site';
+
+const popular = [
+  { tag: 'Provençal',    title: 'Soupe au pistou de Marseille', time: '1h45', diff: 'Facile', tone: 'olive' as const, num: '01' },
+  { tag: 'Été',          title: 'Ratatouille confite',          time: '2h',   diff: 'Facile', tone: 'rose' as const,  num: '02' },
+  { tag: 'Méditerranée', title: "Tapenade noire d'Aups",        time: '20min', diff: 'Très facile', tone: 'cocoa' as const, num: '03' },
+  { tag: 'Hiver',        title: 'Daube avignonnaise',           time: '3h30', diff: 'Moyen',  tone: 'warm' as const,  num: '04' },
+  { tag: 'Provençal',    title: 'Brandade nîmoise',             time: '1h30', diff: 'Moyen',  tone: 'sand' as const,  num: '05' },
+  { tag: 'Apéro',        title: 'Pissaladière de Nice',         time: '2h',   diff: 'Moyen',  tone: 'lav' as const,   num: '06' },
+];
+---
+
+<Site title="Toutes les recettes" description="94 recettes provençales et méditerranéennes, classées par tradition, par saison, par accord mets-vins." activePage="recettes">
+  <section class="section" style="padding-top: 60px; padding-bottom: 40px;">
+    <div class="container">
+      <div class="crumb">
+        <a href="/">Accueil</a><span class="sep">/</span><span>Recettes</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 80px; align-items: end; position: relative;">
+        <h1 class="h-page">
+          Toute la cuisine,<br />
+          <em>par catégorie</em>.
+        </h1>
+        <p class="lede" style="max-width: 42ch;">
+          94 recettes, classées par tradition, par mer, par saison ou par accord.
+          Chacune testée chez nous, photographiée à la lumière du jour.
+        </p>
+        <Stamp text="GUIDE COMPLET · 94 RECETTES ·" center="N°06" size={140} rot={9}
+          style="position: absolute; right: -30px; top: -40px;" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 24px;">
+    <div class="container">
+      <div class="eyebrow" style="margin-bottom: 28px;"><span class="dot"></span>Quatre catégories</div>
+    </div>
+    <div class="container">
+      <div class="cat-grid">
+        {CATEGORIES.map((c) => <CategoryCard {...c} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="left">
+          <div class="eyebrow"><span class="dot"></span>Les plus consultées</div>
+          <h2 class="h-section" style="margin-top: 18px;">
+            Recettes populaires <em class="flourish">ce printemps</em>.
+          </h2>
+        </div>
+        <div class="right">
+          <a href="#" class="btn btn-ghost">Voir tout <span class="arrow">→</span></a>
+        </div>
+      </div>
+      <div class="recipe-grid">
+        {popular.map((r) => <RecipeCard {...r} />)}
+      </div>
+    </div>
+  </section>
+
+  <CTABanner />
+  <Newsletter />
+</Site>

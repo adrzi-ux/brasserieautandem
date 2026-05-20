@@ -1,0 +1,55 @@
+---
+import Placeholder from './Placeholder.astro';
+import Stamp from './Stamp.astro';
+
+type Tone = 'warm' | 'olive' | 'cocoa' | 'sand' | 'lav' | 'rose';
+
+interface CrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  crumb: CrumbItem[];
+  title: string;
+  lede: string;
+  tone?: Tone;
+  stampText?: string;
+  stampCenter?: string;
+  stampColor?: 'terracotta' | 'brown' | 'olive';
+}
+
+const {
+  crumb,
+  title,
+  lede,
+  tone = 'rose',
+  stampText,
+  stampCenter,
+  stampColor = 'terracotta',
+} = Astro.props;
+---
+
+<section class="fb-hero">
+  <div class="bg">
+    <Placeholder tone={tone} label={`Hero · ${title.replace(/<[^>]+>/g, '')}`} />
+  </div>
+  <div class="container">
+    <div class="crumb">
+      {crumb.map((c, i) => (
+        <>
+          {i > 0 && <span class="sep">/</span>}
+          {c.href ? <a href={c.href}>{c.label}</a> : <span>{c.label}</span>}
+        </>
+      ))}
+    </div>
+    <div style="position: relative;">
+      <h1 class="h-page" set:html={title} />
+      <p class="lede">{lede}</p>
+      {stampText && (
+        <Stamp text={stampText} center={stampCenter} size={140} color={stampColor} rot={-12}
+          style="position: absolute; right: 0; top: -10px;" />
+      )}
+    </div>
+  </div>
+</section>

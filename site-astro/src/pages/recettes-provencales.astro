@@ -1,0 +1,101 @@
+---
+import Site from '~/layouts/Site.astro';
+import CategoryHero from '~/components/CategoryHero.astro';
+import CategoryCard from '~/components/CategoryCard.astro';
+import RecipeCard from '~/components/RecipeCard.astro';
+import CTABanner from '~/components/CTABanner.astro';
+import Newsletter from '~/components/Newsletter.astro';
+import { CATEGORIES } from '~/data/site';
+
+const recipes = [
+  { tag: 'Plat',    title: 'Aïoli traditionnel',         time: '1h',    diff: 'Facile',    tone: 'warm' as const,  num: '01' },
+  { tag: 'Plat',    title: 'Ratatouille confite',        time: '2h',    diff: 'Facile',    tone: 'olive' as const, num: '02' },
+  { tag: 'Mijoté',  title: 'Daube avignonnaise',         time: '3h30',  diff: 'Moyen',     tone: 'cocoa' as const, num: '03' },
+  { tag: 'Été',     title: 'Tian de légumes du soleil',  time: '1h15',  diff: 'Facile',    tone: 'rose' as const,  num: '04' },
+  { tag: 'Apéro',   title: "Tapenade noire d'Aups",      time: '20min', diff: 'T. facile', tone: 'sand' as const,  num: '05' },
+  { tag: 'Soupe',   title: 'Soupe au pistou',            time: '1h45',  diff: 'Facile',    tone: 'olive' as const, num: '06' },
+  { tag: 'Tarte',   title: 'Pissaladière de Nice',       time: '2h',    diff: 'Moyen',     tone: 'lav' as const,   num: '07' },
+  { tag: 'Pain',    title: 'Fougasse aux olives',        time: '2h30',  diff: 'Moyen',     tone: 'warm' as const,  num: '08' },
+  { tag: 'Poisson', title: 'Brandade nîmoise',           time: '1h30',  diff: 'Moyen',     tone: 'sand' as const,  num: '09' },
+  { tag: 'Apéro',   title: 'Panisses de Marseille',      time: '40min', diff: 'Facile',    tone: 'rose' as const,  num: '10' },
+  { tag: 'Plat',    title: 'Pieds-paquets marseillais',  time: '4h',    diff: 'Élevé',     tone: 'cocoa' as const, num: '11' },
+  { tag: 'Dessert', title: 'Tarte tropézienne',          time: '3h',    diff: 'Moyen',     tone: 'lav' as const,   num: '12' },
+];
+---
+
+<Site title="Recettes provençales" description="24 recettes provençales traditionnelles : daube, aïoli, ratatouille, tian, tapenade. Écrites pour la maison." activePage="recettes">
+  <CategoryHero
+    crumb={[{ label: 'Accueil', href: '/' }, { label: 'Recettes', href: '/recettes/' }, { label: 'Provençales' }]}
+    title={`Recettes <em>provençales</em>,<br/>la cuisine du <em>retour</em>.`}
+    lede="Daube, aïoli, tian, tapenade — la cuisine du Sud qu'on fait depuis toujours, écrite proprement et adaptée pour la maison."
+    tone="cocoa"
+    stampText="CUISINE DU SUD · 24 RECETTES ·"
+    stampCenter="N°03"
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="two-col">
+        <div>
+          <div class="eyebrow"><span class="dot"></span>Le mot de la maison</div>
+          <h2 class="h-section" style="margin-top: 18px; max-width: 12ch;">
+            Ce qu'on appelle <em class="flourish">la cuisine d'ici</em>.
+          </h2>
+        </div>
+        <div class="intro-prose">
+          <p class="dropcap">
+            La cuisine provençale n'a jamais été figée. C'est une cuisine de gestes :
+            écraser l'ail dans le mortier, attendre que l'huile blondisse, sortir
+            la cocotte du four à la nuit tombée.
+          </p>
+          <p>
+            Vous trouverez ici douze recettes que nous faisons régulièrement à la
+            brasserie ou à la maison. Elles sont écrites pour être suivies, mais aussi
+            pour être abîmées — annotations dans la marge, taches d'huile, c'est leur
+            destin normal.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 20px;">
+    <div class="container">
+      <div style="display: flex; justify-content: space-between; align-items: end; margin-bottom: 36px;">
+        <div class="eyebrow"><span class="dot"></span>12 fiches éprouvées</div>
+        <div class="chips">
+          <button class="chip active">Toutes <span class="count">12</span></button>
+          <button class="chip">Entrées</button>
+          <button class="chip">Plats</button>
+          <button class="chip">Desserts</button>
+          <button class="chip">≤ 1h</button>
+        </div>
+      </div>
+      <div class="recipe-grid">
+        {recipes.map((r) => <RecipeCard {...r} />)}
+      </div>
+      <div style="margin-top: 64px; text-align: center;">
+        <a href="#" class="btn btn-ghost">Charger plus de recettes</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background: var(--cream);">
+    <div class="container">
+      <div class="section-head">
+        <div class="left">
+          <div class="eyebrow"><span class="dot"></span>Autres catégories</div>
+          <h2 class="h-section" style="margin-top: 18px;">
+            Continuer <em class="flourish">le voyage</em>.
+          </h2>
+        </div>
+      </div>
+      <div class="cat-grid">
+        {CATEGORIES.filter((c) => c.title !== 'Recettes provençales').map((c) => <CategoryCard {...c} />)}
+      </div>
+    </div>
+  </section>
+
+  <CTABanner />
+  <Newsletter />
+</Site>

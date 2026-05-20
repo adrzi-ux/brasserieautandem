@@ -1,0 +1,87 @@
+---
+import Site from '~/layouts/Site.astro';
+import CategoryHero from '~/components/CategoryHero.astro';
+import CategoryCard from '~/components/CategoryCard.astro';
+import RecipeCard from '~/components/RecipeCard.astro';
+import CTABanner from '~/components/CTABanner.astro';
+import Newsletter from '~/components/Newsletter.astro';
+import { CATEGORIES } from '~/data/site';
+
+const recipes = [
+  { tag: 'Pasta',   title: 'Orecchiette aux brocolis',     time: '35min', diff: 'Facile',     tone: 'olive' as const, num: '01' },
+  { tag: 'Riz',     title: 'Paëlla valenciana',            time: '1h30',  diff: 'Moyen',      tone: 'warm' as const,  num: '02' },
+  { tag: 'Tagine',  title: "Tagine d'agneau au citron",    time: '2h',    diff: 'Moyen',      tone: 'rose' as const,  num: '03' },
+  { tag: 'Mezze',   title: 'Hommos & moutabal',            time: '30min', diff: 'Facile',     tone: 'sand' as const,  num: '04' },
+  { tag: 'Pizza',   title: 'Pizza margherita au levain',   time: '5h',    diff: 'Élevé',      tone: 'cocoa' as const, num: '05' },
+  { tag: 'Salade',  title: 'Salade grecque traditionnelle',time: '15min', diff: 'T. facile',  tone: 'lav' as const,   num: '06' },
+  { tag: 'Tagine',  title: 'Couscous aux sept légumes',    time: '2h30',  diff: 'Moyen',      tone: 'olive' as const, num: '07' },
+  { tag: 'Poisson', title: 'Loup de mer au four, citron',  time: '45min', diff: 'Facile',     tone: 'warm' as const,  num: '08' },
+  { tag: 'Pasta',   title: 'Lasagnes au ragù bolognaise',  time: '3h',    diff: 'Moyen',      tone: 'cocoa' as const, num: '09' },
+];
+---
+
+<Site title="Recettes méditerranéennes" description="18 recettes de la grande table méditerranéenne : pasta, paëlla, tagine, mezze. De la Sicile au Maroc, par Valence." activePage="recettes">
+  <CategoryHero
+    crumb={[{ label: 'Accueil', href: '/' }, { label: 'Recettes', href: '/recettes/' }, { label: 'Méditerranéennes' }]}
+    title={`La grande table<br/><em>méditerranéenne</em>.`}
+    lede="Pasta du Sud, paëllas, tagines, mezze — neuf recettes qui font voyager sans quitter la cuisine. De la Sicile au Maroc, par Valence."
+    tone="warm"
+    stampText="DE LA SICILE AU MAROC · 18 RECETTES ·"
+    stampCenter="N°04"
+    stampColor="olive"
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="two-col flip">
+        <div class="intro-prose">
+          <p class="dropcap">
+            La Provence regarde la mer. Et la mer, elle, ne s'arrête pas à la Méditerranée
+            française : elle continue jusqu'aux Pouilles, à Valence, à Marrakech.
+            C'est cette grande table commune qu'on tente de dresser ici.
+          </p>
+          <p>
+            On a choisi neuf recettes qui dialoguent avec la cuisine provençale —
+            parfois en cousine, parfois en contrepoint. Chacune est précédée d'un
+            petit mot sur la région et le moment où on la mange traditionnellement.
+          </p>
+        </div>
+        <div>
+          <div class="eyebrow"><span class="dot"></span>Notre lecture</div>
+          <h2 class="h-section" style="margin-top: 18px; max-width: 12ch;">
+            Cuisine d'<em class="flourish">une seule mer</em>.
+          </h2>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 20px;">
+    <div class="container">
+      <div style="display: flex; justify-content: space-between; align-items: end; margin-bottom: 36px;">
+        <div class="eyebrow"><span class="dot"></span>9 recettes</div>
+        <div class="chips">
+          <button class="chip active">Toutes</button>
+          <button class="chip">Italie</button>
+          <button class="chip">Espagne</button>
+          <button class="chip">Maghreb</button>
+          <button class="chip">Levant</button>
+        </div>
+      </div>
+      <div class="recipe-grid">
+        {recipes.map((r) => <RecipeCard {...r} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background: var(--cream);">
+    <div class="container">
+      <div class="cat-grid">
+        {CATEGORIES.filter((c) => c.title !== 'Méditerranéennes').map((c) => <CategoryCard {...c} />)}
+      </div>
+    </div>
+  </section>
+
+  <CTABanner />
+  <Newsletter />
+</Site>

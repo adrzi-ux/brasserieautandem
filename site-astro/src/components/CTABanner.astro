@@ -1,0 +1,31 @@
+---
+import { SITE } from '~/data/site';
+---
+
+<section class="cta-banner">
+  <div class="container">
+    <div>
+      <div class="eyebrow" style="color: rgba(245,239,224,.85);">
+        <span class="dot" style="background: #F5EFE0;"></span>
+        Notre table, votre prochaine étape
+      </div>
+      <h2 class="h-section" style="margin-top: 18px; max-width: 16ch;">
+        Une <em class="flourish" style="color: #F5EFE0; font-style: italic;">brasserie de village</em>, ouverte dès 6h30.
+      </h2>
+      <div style="margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap;">
+        <a href="/notre-brasserie/" class="btn btn-on-dark">
+          Découvrir la carte <span class="arrow">→</span>
+        </a>
+        <a href="/contact/" class="btn" style="background: transparent; color: var(--cream); border: 1px solid rgba(245,239,224,.5);">
+          Réserver une table
+        </a>
+      </div>
+    </div>
+    <div class="addr">
+      <strong>Nous trouver</strong>
+      {SITE.address.street}<br />
+      {SITE.address.city}, {SITE.address.zip}<br />
+      {SITE.phone}
+    </div>
+  </div>
+</section>

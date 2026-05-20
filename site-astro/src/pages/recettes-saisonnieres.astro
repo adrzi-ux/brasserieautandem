@@ -1,0 +1,136 @@
+---
+import Site from '~/layouts/Site.astro';
+import Stamp from '~/components/Stamp.astro';
+import RecipeCard from '~/components/RecipeCard.astro';
+import CTABanner from '~/components/CTABanner.astro';
+import Newsletter from '~/components/Newsletter.astro';
+
+const seasons = [
+  {
+    cls: 'spring',
+    label: 'Printemps', num: 'I.',
+    title: 'Asperges,\nfèves, agneau',
+    body: 'Mars à mai. Le jardin redémarre, on cuisine vert.',
+    signs: ['Asperges violettes', 'Fèves', 'Petits pois', 'Agneau de Sisteron', 'Mesclun'],
+  },
+  {
+    cls: 'summer',
+    label: 'Été', num: 'II.',
+    title: 'Tomates,\naubergines, basilic',
+    body: 'Juin à août. Le soleil fait la cuisine, on assemble.',
+    signs: ['Tomates de plein champ', 'Aubergines', 'Courgettes fleur', 'Pistou', 'Melons de Cavaillon'],
+  },
+  {
+    cls: 'autumn',
+    label: 'Automne', num: 'III.',
+    title: 'Champignons,\ngibier, courges',
+    body: 'Septembre à novembre. La forêt prend le relais.',
+    signs: ['Cèpes', 'Châtaignes', 'Coings', 'Sanglier', 'Potimarrons'],
+  },
+  {
+    cls: 'winter',
+    label: 'Hiver', num: 'IV.',
+    title: 'Mijotés,\nagrumes, truffe',
+    body: 'Décembre à février. On rallume la cocotte.',
+    signs: ['Truffe noire', 'Cardons', 'Clémentines', 'Daubes', 'Soupes au pistou conservé'],
+  },
+];
+
+const enCeMoment = [
+  { tag: 'Printemps', title: "Asperges blanches d'Eyragues, sauce mousseline", time: '45min', diff: 'Facile', tone: 'olive' as const, num: '01' },
+  { tag: 'Printemps', title: 'Risotto aux fèves et menthe fraîche',            time: '40min', diff: 'Facile', tone: 'rose' as const,  num: '02' },
+  { tag: 'Printemps', title: 'Agneau de Sisteron, jus à la sarriette',         time: '1h30',  diff: 'Moyen',  tone: 'warm' as const,  num: '03' },
+];
+
+const months = ['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Aoû','Sep','Oct','Nov','Déc'];
+const currentMonth = 4; // mai (index 0-based)
+---
+
+<Site title="Recettes saisonnières" description="32 recettes par saison : asperges au printemps, tomates en été, gibier à l'automne, mijotés en hiver." activePage="recettes">
+  <section class="section" style="padding-top: 60px; padding-bottom: 24px;">
+    <div class="container">
+      <div class="crumb">
+        <a href="/">Accueil</a><span class="sep">/</span>
+        <a href="/recettes/">Recettes</a><span class="sep">/</span>
+        <span>Saisonnières</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 60px; align-items: end; position: relative;">
+        <h1 class="h-page">
+          Quatre <em>saisons</em>,<br/>
+          quatre <em>cuisines</em>.
+        </h1>
+        <p class="lede" style="max-width: 42ch;">
+          On ne cuisine pas la même chose en mars et en novembre. Voici nos 32 recettes,
+          rangées par saison — comme on rangerait des bocaux.
+        </p>
+        <Stamp text="EN CE MOMENT · PRINTEMPS 2026 ·" center="✦" size={130} color="olive" rot={-9}
+          style="position: absolute; right: -20px; top: -50px;" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 16px; padding-bottom: 16px;">
+    <div class="container">
+      <div class="seasons-grid">
+        {seasons.map((s) => (
+          <div class={`season-card ${s.cls}`}>
+            <div class="label">{s.label} · {s.num}</div>
+            <h3 style="white-space: pre-line;">{s.title}</h3>
+            <div class="body">{s.body}</div>
+            <div class="signs">
+              {s.signs.map((g) => <span>{g}</span>)}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="left">
+          <div class="eyebrow"><span class="dot"></span>En ce moment · Printemps</div>
+          <h2 class="h-section" style="margin-top: 18px;">
+            Ce qu'on cuisine <em class="flourish">cette semaine</em>.
+          </h2>
+        </div>
+        <div class="right">
+          <a href="#" class="btn btn-ghost">Toutes les recettes de saison <span class="arrow">→</span></a>
+        </div>
+      </div>
+      <div class="recipe-grid">
+        {enCeMoment.map((r) => <RecipeCard {...r} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background: var(--ink); color: var(--cream);">
+    <div class="container">
+      <div class="eyebrow" style="color: var(--terracotta);">
+        <span class="dot" style="background: var(--terracotta);"></span>
+        Calendrier 2026
+      </div>
+      <h2 class="h-section" style="color: var(--cream); margin-top: 18px; max-width: 18ch;">
+        Le calendrier des <em style="color: var(--cream); font-style: italic; opacity: 0.9;">produits</em>.
+      </h2>
+      <div style="margin-top: 40px; display: grid; grid-template-columns: repeat(12, 1fr); gap: 1px; background: rgba(245,239,224,0.15);">
+        {months.map((m, i) => {
+          const isNow = i === currentMonth;
+          return (
+            <div style={`background: ${isNow ? 'var(--terracotta)' : 'var(--ink)'}; padding: 32px 14px; text-align: center; min-height: 110px;`}>
+              <div style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; opacity: 0.7; margin-bottom: 8px;">
+                {String(i + 1).padStart(2, '0')}
+              </div>
+              <div class="serif" style="font-size: 22px; font-style: italic;">{m}</div>
+              {isNow && <div style="margin-top: 8px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em;">VOUS ÊTES ICI</div>}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <CTABanner />
+  <Newsletter />
+</Site>

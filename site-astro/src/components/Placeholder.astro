@@ -1,0 +1,31 @@
+---
+type Tone = 'warm' | 'olive' | 'cocoa' | 'sand' | 'lav' | 'rose';
+
+interface Props {
+  label: string;
+  tone?: Tone;
+  angle?: number;
+  class?: string;
+}
+
+const { label, tone = 'warm', angle = 45, class: className = '' } = Astro.props;
+
+const palettes: Record<Tone, { bg: string; line: string }> = {
+  warm:  { bg: '#EDE4D0', line: 'rgba(61,40,23,.07)' },
+  olive: { bg: '#DCDFC5', line: 'rgba(94,103,56,.10)' },
+  cocoa: { bg: '#3D2817', line: 'rgba(245,239,224,.08)' },
+  sand:  { bg: '#E6D9B8', line: 'rgba(61,40,23,.10)' },
+  lav:   { bg: '#D6CBE2', line: 'rgba(124,94,154,.10)' },
+  rose:  { bg: '#E8C9B4', line: 'rgba(166,96,35,.10)' },
+};
+
+const p = palettes[tone];
+const color = tone === 'cocoa' ? '#F5EFE0' : '#3D2817';
+---
+
+<div
+  class={`ph ${className}`}
+  style={`--ph-bg: ${p.bg}; --ph-line: ${p.line}; --ph-angle: ${angle}deg; color: ${color};`}
+>
+  <div class="ph-label">{label}</div>
+</div>

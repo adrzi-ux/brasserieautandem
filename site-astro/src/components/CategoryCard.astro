@@ -1,0 +1,24 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  icon: 'olive' | 'wheat' | 'sun' | 'glass';
+  title: string;
+  count: number;
+  href?: string;
+}
+
+const { icon, title, count, href = '#' } = Astro.props;
+const countStr = String(count).padStart(2, '0');
+---
+
+<a href={href} class="cat-card">
+  <div class="cat-icon">
+    <Icon name={icon} size={34} stroke={1} />
+  </div>
+  <h3>{title}</h3>
+  <div class="count">
+    <span>{countStr} recettes</span>
+    <span class="arrow">→</span>
+  </div>
+</a>
