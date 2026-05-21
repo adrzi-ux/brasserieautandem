@@ -1,0 +1,10 @@
+# Redirections 301 pour préserver les URLs Wayback historiques
+# Format Cloudflare Pages / Netlify : source target status
+# Compatible avec la majorité des hébergeurs statiques
+
+# Pages Wayback originales sans BL externe mais indexées historiquement
+/notre-carte/   /notre-brasserie/   301
+/diaporama/     /                   301
+
+# Variants HTTP → root (Ahrefs montre 6 dofollow RD sur http://www.)
+# Note : géré par défaut au niveau Cloudflare (HTTPS auto)

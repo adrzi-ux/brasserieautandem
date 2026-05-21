@@ -10,7 +10,7 @@ import Newsletter from '~/components/Newsletter.astro';
 import { CATEGORIES, FEATURED_RECIPES, PRODUCERS, PAIRINGS, SITE } from '~/data/site';
 ---
 
-<Site title="Guide gastronomie & recettes provençales" description="Recettes provençales, accords mets-vins et producteurs du Luberon. Un magazine éditorial porté par la Brasserie Au Tandem à La Roque-d'Anthéron." activePage="recettes">
+<Site title="Guide gastronomie & recettes provençales" description="Recettes provençales, accords mets-vins et producteurs du Sud. Un magazine éditorial porté par la Brasserie Au Tandem à Saint-Cannat." activePage="recettes">
   <section class="hero">
     <div class="container">
       <div class="hero-eyebrow-row">
@@ -24,7 +24,7 @@ import { CATEGORIES, FEATURED_RECIPES, PRODUCERS, PAIRINGS, SITE } from '~/data/
       </div>
       <div class="hero-grid">
         <div style="position: relative;">
-          <h1 class="h-editorial">
+          <h1 class="h-page">
             Le goût <em>vif</em><br/>
             de la <em>Provence</em>,<br/>
             écrit à deux.
@@ -47,9 +47,9 @@ import { CATEGORIES, FEATURED_RECIPES, PRODUCERS, PAIRINGS, SITE } from '~/data/
           </div>
         </div>
         <div class="hero-image-wrap">
-          <div style="aspect-ratio: 4 / 5;">
+          <div style="aspect-ratio: 4 / 5; position: relative; overflow: hidden;">
             <span class="tag">À la une</span>
-            <Placeholder tone="rose" label="Hero · Aïoli traditionnel, terrasse au matin" />
+            <img src="/images/au-tandem.png" alt="Brasserie Au Tandem, terrasse au matin" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
           </div>
           <div class="hero-caption">
             <span class="num">N°01</span>

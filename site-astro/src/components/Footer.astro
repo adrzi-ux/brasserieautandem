@@ -16,7 +16,7 @@ import { SITE } from '~/data/site';
           <span class="brand-words">Au Tandem<small>{SITE.tagline}</small></span>
         </div>
         <p style="max-width: 32ch; color: var(--ink-soft); font-size: 13.5px; line-height: 1.6;">
-          Cuisine provençale, accords mets-vins et carnet d'adresses du Luberon.
+          Cuisine provençale, accords mets-vins et carnet d'adresses du Sud.
           Pensé à {SITE.address.city}, {SITE.address.zip}.
         </p>
       </div>
@@ -50,7 +50,10 @@ import { SITE } from '~/data/site';
     </div>
     <div class="footer-bottom">
       <span>© 2026 {SITE.name} — {SITE.address.city}</span>
-      <span>Mentions légales · Confidentialité</span>
+      <span>
+        <a href="/mentions-legales/">Mentions légales</a> ·
+        <a href="/politique-de-cookies-ue/">Cookies</a>
+      </span>
     </div>
   </div>
 </footer>

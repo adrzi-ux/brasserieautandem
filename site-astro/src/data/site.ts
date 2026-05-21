@@ -69,11 +69,11 @@ export const SITE = {
   description: 'Guide gastronomie & recettes provençales. Les coulisses d\'une brasserie de village au cœur de la Provence.',
   url: 'https://brasserieautandem.fr',
   address: {
-    street: '16 rue de l\'église',
-    city: 'La Roque-d\'Anthéron',
-    zip: '13640',
+    street: 'Place du Cours',
+    city: 'Saint-Cannat',
+    zip: '13760',
     region: 'Bouches-du-Rhône',
   },
-  phone: '04 42 59 68 49',
+  email: 'contact@brasserieautandem.fr',
   instagram: '@brasserieautandem',
 };

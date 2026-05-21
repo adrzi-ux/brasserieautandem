@@ -1,0 +1,85 @@
+---
+import Site from '~/layouts/Site.astro';
+import Newsletter from '~/components/Newsletter.astro';
+import { SITE } from '~/data/site';
+---
+
+<Site title="Mentions légales" description={`Mentions légales du site ${SITE.url} — ${SITE.name}, ${SITE.address.city}.`}>
+  <section class="section" style="padding-top: 60px; padding-bottom: 30px;">
+    <div class="container">
+      <h1 class="h-page" style="max-width: 16ch;">
+        Mentions <em>légales</em>.
+      </h1>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 20px;">
+    <div class="container">
+      <div class="intro-prose" style="max-width: 72ch;">
+
+        <h2 class="serif" style="font-size: 28px; margin-top: 0; margin-bottom: 16px;">Éditeur du site</h2>
+        <p>
+          <strong>{SITE.name}</strong><br />
+          {SITE.address.street}<br />
+          {SITE.address.city}, {SITE.address.zip}<br />
+          {SITE.address.region}, France<br />
+          Email : <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+        </p>
+        <p>
+          <em>SIRET et statut juridique à compléter.</em>
+        </p>
+
+        <h2 class="serif" style="font-size: 28px; margin-top: 40px; margin-bottom: 16px;">Responsable de la publication</h2>
+        <p>Camille Aubert</p>
+
+        <h2 class="serif" style="font-size: 28px; margin-top: 40px; margin-bottom: 16px;">Délégué à la protection des données (DPO)</h2>
+        <p>
+          Léo Pinault<br />
+          Contact : <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+        </p>
+
+        <h2 class="serif" style="font-size: 28px; margin-top: 40px; margin-bottom: 16px;">Hébergement</h2>
+        <p>
+          Le site est hébergé par Cloudflare, Inc.<br />
+          101 Townsend St, San Francisco, CA 94107, États-Unis<br />
+          <a href="https://www.cloudflare.com" target="_blank" rel="noopener">www.cloudflare.com</a>
+        </p>
+
+        <h2 class="serif" style="font-size: 28px; margin-top: 40px; margin-bottom: 16px;">Propriété intellectuelle</h2>
+        <p>
+          L'ensemble des contenus présents sur ce site (textes, photos, illustrations,
+          recettes éditées, identité graphique) sont la propriété exclusive de
+          {SITE.name}, sauf mention contraire. Toute reproduction, totale ou partielle,
+          sans autorisation écrite est interdite.
+        </p>
+        <p>
+          Les recettes traditionnelles citées (aïoli, ratatouille, daube, pieds-paquets,
+          etc.) appartiennent au patrimoine culinaire provençal. Notre écriture et nos
+          adaptations en revanche sont protégées.
+        </p>
+
+        <h2 class="serif" style="font-size: 28px; margin-top: 40px; margin-bottom: 16px;">Données personnelles</h2>
+        <p>
+          Conformément au Règlement Général sur la Protection des Données (RGPD) et à la
+          loi Informatique et Libertés, vous disposez d'un droit d'accès, de rectification,
+          d'opposition, de suppression et de portabilité de vos données personnelles.
+        </p>
+        <p>
+          Pour exercer ces droits, écrivez-nous à <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+        </p>
+        <p>
+          Voir aussi notre <a href="/politique-de-cookies-ue/">politique de cookies</a>.
+        </p>
+
+        <h2 class="serif" style="font-size: 28px; margin-top: 40px; margin-bottom: 16px;">Crédits</h2>
+        <p>
+          Typographies : Cormorant Garamond, Inter, JetBrains Mono (Google Fonts).<br />
+          Photos : libres de droits et créations originales {SITE.name}.
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <Newsletter />
+</Site>
