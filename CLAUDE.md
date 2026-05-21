@@ -2,6 +2,76 @@
 
 ## Statut
 ✓ **ACHETÉ le 2026-05-19** — premier batch du projet remontage expired.
+✓ **EN PRODUCTION le 2026-05-21** — site Astro statique, 36 pages live sur `https://www.brasserieautandem.fr`
+
+## 🚀 Site en production (2026-05-21)
+
+### Stack
+- **Astro 5** static build (36 pages, 5.8 MB) — code dans `site-astro/`
+- **CSS** : Cormorant Garamond + Inter + JetBrains Mono (Google Fonts)
+- **Images** : 30 photos Pexels API (1 brasserie + 21 recettes + 8 producteurs)
+- **Schema.org Recipe** : JSON-LD sur 24 fiches recettes (rich snippets)
+
+### Infrastructure
+- **VPS** : Contabo `207.180.213.109` (mutualisé avec boutique-catea, dirs séparés)
+- **Webroot** : `/var/www/brasserieautandem/`
+- **Nginx vhost** : `nginx-vhost.conf` (split apex/www avec 301 server-side)
+  - Apex `brasserieautandem.fr` → 301 → `www.brasserieautandem.fr`
+  - www = canonical (cohérent avec `site` dans astro.config.mjs)
+- **SSL** : Cloudflare Origin Certificate (RSA 2048, valide jusqu'au 2041-05-17)
+  - Stocké sur VPS : `/etc/ssl/brasserieautandem/{fullchain,privkey}.pem`
+  - Self-signed backup : `*.selfsigned.pem` (au cas où)
+
+### Cloudflare
+- **DNS** : NS Cloudflare (ariadne + kipp), comme boutique-catea (même compte)
+- **A records** : `@` et `www` → `207.180.213.109` (Proxied orange)
+- **TXT GSC** : préservé après switch NS
+- **SSL/TLS** : **Full (strict)** — vérification cert backend
+- **Always Use HTTPS** : ON
+- **Redirect Rules** : "Apex → www (canonical)" Active (URI Full wildcard) — redondance avec Nginx
+- **Cache** : par défaut Cloudflare CDN actif sur assets statiques
+
+### URLs
+- Canonical : `https://www.brasserieautandem.fr`
+- Sitemap : `https://www.brasserieautandem.fr/sitemap-index.xml`
+- robots.txt : `https://www.brasserieautandem.fr/robots.txt`
+
+### Pages
+| Catégorie | URLs |
+|---|---|
+| Institutionnel (11) | `/`, `/recettes/`, `/recettes-{provencales,mediterraneennes,saisonnieres}/`, `/accords-mets-vins/`, `/producteurs-locaux/`, `/notre-brasserie/`, `/a-propos/`, `/contact/` |
+| Légal (2) | `/mentions-legales/`, `/politique-de-cookies-ue/` (slugs Wayback préservés) |
+| Fiches recettes (24) | `/recettes/{slug}/` × 12 Provençales + 9 Méditerranéennes + 3 Saisonnières |
+| Redirects 301 | `/notre-carte/` → `/notre-brasserie/`, `/diaporama/` → `/` |
+
+### Brand info (fictive, vs Wayback original)
+- **Adresse** : Place du Cours, Saint-Cannat, 13760, Bouches-du-Rhône (vs `16 rue de l'église, La Roque-d'Anthéron, 13640` original)
+- **Email** : `contact@brasserieautandem.fr` (pas de téléphone affiché)
+- **Équipe fictive** : Camille Aubert (cuisine), Léo Pinault (écriture & salle), Inès Cabrol (salle & vin)
+- **Anciens patrons cités** : Yvonne & Henri (fictifs, depuis 1932 - 2019)
+- **Eric Girardi / DIGISENSE SARL** (vraies infos Wayback) → REMPLACÉS dans tout le site
+
+### Production live commands
+```bash
+# Build local
+cd site-astro && npm run build
+
+# Deploy
+scp -i ~/.ssh/boutique-catea -r dist/* root@207.180.213.109:/var/www/brasserieautandem/
+ssh -i ~/.ssh/boutique-catea root@207.180.213.109 "chown -R www-data:www-data /var/www/brasserieautandem"
+
+# Refresh images Pexels (regenerate src/data/recipe-images.ts + producer-images.ts)
+node tools/fetch-pexels.mjs   # Needs PEXELS_API_KEY in .env (gitignored)
+
+# Verify cert match (sur VPS)
+openssl x509 -noout -modulus -in /etc/ssl/brasserieautandem/fullchain.pem | openssl md5
+openssl rsa -noout -modulus -in /etc/ssl/brasserieautandem/privkey.pem | openssl md5
+```
+
+### GSC
+- Domain property `brasserieautandem.fr` validée (TXT DNS)
+- Sitemap soumis 2026-05-21 → 34 URLs découvertes, traitement réussi
+- Pages indexées : à surveiller dans les 1-4 semaines
 
 ## Contexte
 - **Activité originale** : "Brasserie Au Tandem" (restaurant/brasserie)
