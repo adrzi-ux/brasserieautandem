@@ -107,7 +107,7 @@ const FEATURED_RECIPES = [
         </div>
       </div>
       <div class="recipe-grid">
-        {FEATURED_RECIPES.map((r) => <RecipeCard tag={r.tag} title={r.title} time={r.time} diff={r.diff} tone={r.tone} num={r.num} href={`/recettes/${r.slug}/`} />)}
+        {FEATURED_RECIPES.map((r) => <RecipeCard tag={r.tag} title={r.title} time={r.time} diff={r.diff} tone={r.tone} num={r.num} slug={r.slug} href={`/recettes/${r.slug}/`} />)}
       </div>
     </div>
   </section>

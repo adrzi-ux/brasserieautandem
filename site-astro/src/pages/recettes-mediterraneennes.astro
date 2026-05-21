@@ -60,7 +60,7 @@ const recipes = RECIPES.filter(r => r.category === 'mediterraneennes');
         </div>
       </div>
       <div class="recipe-grid">
-        {recipes.map((r) => <RecipeCard tag={r.tag} title={r.title} time={r.time} diff={r.diff} tone={r.tone} num={r.num} href={`/recettes/${r.slug}/`} />)}
+        {recipes.map((r) => <RecipeCard tag={r.tag} title={r.title} time={r.time} diff={r.diff} tone={r.tone} num={r.num} slug={r.slug} href={`/recettes/${r.slug}/`} />)}
       </div>
     </div>
   </section>

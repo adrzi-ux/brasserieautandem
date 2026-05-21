@@ -1,6 +1,7 @@
 ---
 import Placeholder from './Placeholder.astro';
 import Icon from './Icon.astro';
+import { PRODUCER_IMAGES } from '~/data/producer-images';
 
 type Tone = 'warm' | 'olive' | 'cocoa' | 'sand' | 'lav' | 'rose';
 
@@ -10,14 +11,31 @@ interface Props {
   village: string;
   tone?: Tone;
   angle?: number;
+  slug?: string;  // si fourni, cherche dans PRODUCER_IMAGES
 }
 
-const { name, role, village, tone = 'warm', angle = 30 } = Astro.props;
+const { name, role, village, tone = 'warm', angle = 30, slug } = Astro.props;
+
+// Si pas de slug fourni, le dériver du nom (slugify)
+function slugify(s: string): string {
+  return s.toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/['']/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+const effectiveSlug = slug ?? slugify(name);
+const image = PRODUCER_IMAGES[effectiveSlug];
 ---
 
 <article class="producer-card">
   <div class="portrait">
-    <Placeholder tone={tone} angle={angle} label={`Portrait · ${name}`} />
+    {image ? (
+      <img src={image.src} alt={image.alt || `Portrait · ${name}`} loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+    ) : (
+      <Placeholder tone={tone} angle={angle} label={`Portrait · ${name}`} />
+    )}
   </div>
   <h3 class="name">{name}</h3>
   <div class="role">{role}</div>

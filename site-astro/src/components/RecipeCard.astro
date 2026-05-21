@@ -1,6 +1,7 @@
 ---
 import Placeholder from './Placeholder.astro';
 import Icon from './Icon.astro';
+import { RECIPE_IMAGES } from '~/data/recipe-images';
 
 type Tone = 'warm' | 'olive' | 'cocoa' | 'sand' | 'lav' | 'rose';
 
@@ -13,14 +14,22 @@ interface Props {
   num?: string;
   showNumber?: boolean;
   href?: string;
+  slug?: string;  // si fourni, cherche dans RECIPE_IMAGES
 }
 
-const { tag, title, time, diff, tone = 'warm', num, showNumber = true, href = '#' } = Astro.props;
+const { tag, title, time, diff, tone = 'warm', num, showNumber = true, href = '#', slug } = Astro.props;
+
+// Si slug fourni + image disponible dans le mapping → on l'utilise
+const image = slug ? RECIPE_IMAGES[slug] : undefined;
 ---
 
 <a href={href} class="recipe-card">
   <div class="img-wrap">
-    <Placeholder tone={tone} label={`Recette · ${title}`} />
+    {image ? (
+      <img src={image.src} alt={image.alt || title} loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+    ) : (
+      <Placeholder tone={tone} label={`Recette · ${title}`} />
+    )}
     {tag && <span class="pill">{tag}</span>}
     {showNumber && num && <span class="number">{num}</span>}
   </div>
