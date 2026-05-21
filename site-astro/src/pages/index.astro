@@ -10,6 +10,9 @@ import Newsletter from '~/components/Newsletter.astro';
 import { CATEGORIES, PRODUCERS, SITE } from '~/data/site';
 import { FEATURED_PAIRINGS as PAIRINGS } from '~/data/pairings';
 import { RECIPES } from '~/data/recipes';
+import { PRODUCER_IMAGES } from '~/data/producer-images';
+
+const bertaudImage = PRODUCER_IMAGES['jean-bertaud'];
 
 // 6 fiches recettes en featured (4 provençales + 2 méditerranéennes pour variété)
 const FEATURED_RECIPES = [
@@ -116,8 +119,12 @@ const FEATURED_RECIPES = [
   <section class="section" style="background: var(--cream);">
     <div class="container">
       <div class="feature-row">
-        <div style="aspect-ratio: 5 / 4; position: relative;">
-          <Placeholder tone="warm" label="Reportage · Jean Bertaud, oléiculteur à Cucuron" />
+        <div style="aspect-ratio: 5 / 4; position: relative; overflow: hidden;">
+          {bertaudImage ? (
+            <img src={bertaudImage.src} alt={bertaudImage.alt || 'Reportage · Jean Bertaud, oléiculteur à Cucuron'} style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+          ) : (
+            <Placeholder tone="warm" label="Reportage · Jean Bertaud, oléiculteur à Cucuron" />
+          )}
           <Stamp
             text="REPORTAGE · OLÉICULTEUR · CUCURON ·"
             center="N°03"
