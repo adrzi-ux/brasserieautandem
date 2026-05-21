@@ -6,15 +6,11 @@ import RecipeCard from '~/components/RecipeCard.astro';
 import CTABanner from '~/components/CTABanner.astro';
 import Newsletter from '~/components/Newsletter.astro';
 import { CATEGORIES } from '~/data/site';
+import { RECIPES } from '~/data/recipes';
 
-const popular = [
-  { tag: 'Provençal',    title: 'Soupe au pistou de Marseille', time: '1h45', diff: 'Facile', tone: 'olive' as const, num: '01' },
-  { tag: 'Été',          title: 'Ratatouille confite',          time: '2h',   diff: 'Facile', tone: 'rose' as const,  num: '02' },
-  { tag: 'Méditerranée', title: "Tapenade noire d'Aups",        time: '20min', diff: 'Très facile', tone: 'cocoa' as const, num: '03' },
-  { tag: 'Hiver',        title: 'Daube avignonnaise',           time: '3h30', diff: 'Moyen',  tone: 'warm' as const,  num: '04' },
-  { tag: 'Provençal',    title: 'Brandade nîmoise',             time: '1h30', diff: 'Moyen',  tone: 'sand' as const,  num: '05' },
-  { tag: 'Apéro',        title: 'Pissaladière de Nice',         time: '2h',   diff: 'Moyen',  tone: 'lav' as const,   num: '06' },
-];
+// 6 fiches populaires (mix provençales / méditerranéennes)
+const popularSlugs = ['soupe-au-pistou', 'ratatouille-confite', 'tapenade-noire-aups', 'daube-avignonnaise', 'brandade-nimoise', 'pissaladiere-nice'];
+const popular = popularSlugs.map(s => RECIPES.find(r => r.slug === s)!);
 ---
 
 <Site title="Toutes les recettes" description="94 recettes provençales et méditerranéennes, classées par tradition, par saison, par accord mets-vins." activePage="recettes">
@@ -60,7 +56,7 @@ const popular = [
         </div>
       </div>
       <div class="recipe-grid">
-        {popular.map((r) => <RecipeCard {...r} />)}
+        {popular.map((r) => <RecipeCard tag={r.tag} title={r.title} time={r.time} diff={r.diff} tone={r.tone} num={r.num} href={`/recettes/${r.slug}/`} />)}
       </div>
     </div>
   </section>

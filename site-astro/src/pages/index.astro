@@ -7,7 +7,14 @@ import RecipeCard from '~/components/RecipeCard.astro';
 import ProducerCard from '~/components/ProducerCard.astro';
 import CTABanner from '~/components/CTABanner.astro';
 import Newsletter from '~/components/Newsletter.astro';
-import { CATEGORIES, FEATURED_RECIPES, PRODUCERS, PAIRINGS, SITE } from '~/data/site';
+import { CATEGORIES, PRODUCERS, PAIRINGS, SITE } from '~/data/site';
+import { RECIPES } from '~/data/recipes';
+
+// 6 fiches recettes en featured (4 provençales + 2 méditerranéennes pour variété)
+const FEATURED_RECIPES = [
+  ...RECIPES.filter(r => r.category === 'provencales').slice(0, 4),
+  ...RECIPES.filter(r => r.category === 'mediterraneennes').slice(0, 2),
+];
 ---
 
 <Site title="Guide gastronomie & recettes provençales" description="Recettes provençales, accords mets-vins et producteurs du Sud. Un magazine éditorial porté par la Brasserie Au Tandem à Saint-Cannat." activePage="recettes">
@@ -100,7 +107,7 @@ import { CATEGORIES, FEATURED_RECIPES, PRODUCERS, PAIRINGS, SITE } from '~/data/
         </div>
       </div>
       <div class="recipe-grid">
-        {FEATURED_RECIPES.map((r) => <RecipeCard {...r} />)}
+        {FEATURED_RECIPES.map((r) => <RecipeCard tag={r.tag} title={r.title} time={r.time} diff={r.diff} tone={r.tone} num={r.num} href={`/recettes/${r.slug}/`} />)}
       </div>
     </div>
   </section>

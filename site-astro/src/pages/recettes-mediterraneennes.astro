@@ -6,18 +6,9 @@ import RecipeCard from '~/components/RecipeCard.astro';
 import CTABanner from '~/components/CTABanner.astro';
 import Newsletter from '~/components/Newsletter.astro';
 import { CATEGORIES } from '~/data/site';
+import { RECIPES } from '~/data/recipes';
 
-const recipes = [
-  { tag: 'Pasta',   title: 'Orecchiette aux brocolis',     time: '35min', diff: 'Facile',     tone: 'olive' as const, num: '01' },
-  { tag: 'Riz',     title: 'Paëlla valenciana',            time: '1h30',  diff: 'Moyen',      tone: 'warm' as const,  num: '02' },
-  { tag: 'Tagine',  title: "Tagine d'agneau au citron",    time: '2h',    diff: 'Moyen',      tone: 'rose' as const,  num: '03' },
-  { tag: 'Mezze',   title: 'Hommos & moutabal',            time: '30min', diff: 'Facile',     tone: 'sand' as const,  num: '04' },
-  { tag: 'Pizza',   title: 'Pizza margherita au levain',   time: '5h',    diff: 'Élevé',      tone: 'cocoa' as const, num: '05' },
-  { tag: 'Salade',  title: 'Salade grecque traditionnelle',time: '15min', diff: 'T. facile',  tone: 'lav' as const,   num: '06' },
-  { tag: 'Tagine',  title: 'Couscous aux sept légumes',    time: '2h30',  diff: 'Moyen',      tone: 'olive' as const, num: '07' },
-  { tag: 'Poisson', title: 'Loup de mer au four, citron',  time: '45min', diff: 'Facile',     tone: 'warm' as const,  num: '08' },
-  { tag: 'Pasta',   title: 'Lasagnes au ragù bolognaise',  time: '3h',    diff: 'Moyen',      tone: 'cocoa' as const, num: '09' },
-];
+const recipes = RECIPES.filter(r => r.category === 'mediterraneennes');
 ---
 
 <Site title="Recettes méditerranéennes" description="18 recettes de la grande table méditerranéenne : pasta, paëlla, tagine, mezze. De la Sicile au Maroc, par Valence." activePage="recettes">
@@ -69,7 +60,7 @@ const recipes = [
         </div>
       </div>
       <div class="recipe-grid">
-        {recipes.map((r) => <RecipeCard {...r} />)}
+        {recipes.map((r) => <RecipeCard tag={r.tag} title={r.title} time={r.time} diff={r.diff} tone={r.tone} num={r.num} href={`/recettes/${r.slug}/`} />)}
       </div>
     </div>
   </section>
