@@ -62,9 +62,6 @@ const recipes = RECIPES.filter(r => r.category === 'provencales');
       <div class="recipe-grid">
         {recipes.map((r) => <RecipeCard tag={r.tag} title={r.title} time={r.time} diff={r.diff} tone={r.tone} num={r.num} slug={r.slug} href={`/recettes/${r.slug}/`} />)}
       </div>
-      <div style="margin-top: 64px; text-align: center;">
-        <a href="#" class="btn btn-ghost">Charger plus de recettes</a>
-      </div>
     </div>
   </section>
 

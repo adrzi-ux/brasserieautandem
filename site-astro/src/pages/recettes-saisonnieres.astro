@@ -4,6 +4,9 @@ import Stamp from '~/components/Stamp.astro';
 import RecipeCard from '~/components/RecipeCard.astro';
 import CTABanner from '~/components/CTABanner.astro';
 import Newsletter from '~/components/Newsletter.astro';
+import { RECIPES } from '~/data/recipes';
+
+const enCeMoment = RECIPES.filter(r => r.category === 'saisonnieres');
 
 const seasons = [
   {
@@ -34,12 +37,6 @@ const seasons = [
     body: 'Décembre à février. On rallume la cocotte.',
     signs: ['Truffe noire', 'Cardons', 'Clémentines', 'Daubes', 'Soupes au pistou conservé'],
   },
-];
-
-const enCeMoment = [
-  { tag: 'Printemps', title: "Asperges blanches d'Eyragues, sauce mousseline", time: '45min', diff: 'Facile', tone: 'olive' as const, num: '01' },
-  { tag: 'Printemps', title: 'Risotto aux fèves et menthe fraîche',            time: '40min', diff: 'Facile', tone: 'rose' as const,  num: '02' },
-  { tag: 'Printemps', title: 'Agneau de Sisteron, jus à la sarriette',         time: '1h30',  diff: 'Moyen',  tone: 'warm' as const,  num: '03' },
 ];
 
 const months = ['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Aoû','Sep','Oct','Nov','Déc'];
@@ -90,12 +87,9 @@ const currentMonth = 4; // mai (index 0-based)
             Ce qu'on cuisine <em class="flourish">cette semaine</em>.
           </h2>
         </div>
-        <div class="right">
-          <a href="#" class="btn btn-ghost">Toutes les recettes de saison <span class="arrow">→</span></a>
-        </div>
       </div>
       <div class="recipe-grid">
-        {enCeMoment.map((r) => <RecipeCard {...r} />)}
+        {enCeMoment.map((r) => <RecipeCard tag={r.tag} title={r.title} time={r.time} diff={r.diff} tone={r.tone} num={r.num} slug={r.slug} href={`/recettes/${r.slug}/`} />)}
       </div>
     </div>
   </section>

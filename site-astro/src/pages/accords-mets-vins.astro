@@ -3,26 +3,7 @@ import Site from '~/layouts/Site.astro';
 import Stamp from '~/components/Stamp.astro';
 import CTABanner from '~/components/CTABanner.astro';
 import Newsletter from '~/components/Newsletter.astro';
-
-const ROUGES = [
-  { dish: 'Daube avignonnaise', wine: 'Vacqueyras',   region: 'Côtes-du-Rhône', note: 'Grenache mature, garrigue, tient la longue cuisson.' },
-  { dish: 'Pieds-paquets',      wine: 'Gigondas',     region: 'Côtes-du-Rhône', note: 'Tannin présent, fruit noir, pour la richesse du plat.' },
-  { dish: 'Pissaladière',       wine: 'Bellet rouge', region: 'Bellet AOP',     note: 'Folle noire, léger ; équilibre oignon confit et anchois.' },
-  { dish: 'Agneau de Sisteron', wine: 'Bandol rouge', region: 'Bandol AOP',     note: "Mourvèdre dominant, structure idéale pour l'agneau rôti." },
-];
-
-const ROSES = [
-  { dish: 'Tian de légumes',       wine: "Coteaux d'Aix rosé", region: "Coteaux d'Aix",      note: 'Fraîcheur et finale herbacée, sans dominer.' },
-  { dish: 'Mesclun & chèvre frais',wine: 'Côtes de Provence',  region: 'Côtes de Provence', note: 'Le rosé pâle classique, miellé en finale.' },
-  { dish: 'Tapenade & pan-bagnat', wine: 'Tavel',              region: 'Tavel AOP',         note: 'Rosé corsé qui tient l\'olive noire et l\'anchois.' },
-];
-
-const BLANCS = [
-  { dish: 'Aïoli traditionnel', wine: 'Bandol blanc',   region: 'Bandol AOP',  note: 'Clairette, bourboulenc — droit, salin, taillé pour la morue.' },
-  { dish: 'Soupe au pistou',    wine: 'Cassis blanc',   region: 'Cassis AOP',  note: "Nez d'anis qui répond au basilic." },
-  { dish: 'Bouillabaisse',      wine: 'Cassis blanc',   region: 'Cassis AOP',  note: 'Marsanne et clairette, salinité méditerranéenne.' },
-  { dish: 'Brandade nîmoise',   wine: 'Coteaux du Pic', region: 'Languedoc',   note: 'Roussanne ; soutient le gras de la morue à l\'huile.' },
-];
+import { PAIRINGS_ROUGES as ROUGES, PAIRINGS_ROSES as ROSES, PAIRINGS_BLANCS as BLANCS } from '~/data/pairings';
 ---
 
 <Site title="Accords mets-vins" description="11 accords mets-vins choisis par notre sommelier : rouges du Rhône sud, rosés de Provence, blancs de Cassis et Bandol." activePage="accords">
@@ -157,9 +138,6 @@ const BLANCS = [
           ))}
         </tbody>
       </table>
-      <div style="margin-top: 48px;">
-        <a href="#" class="btn btn-on-dark">Télécharger les fiches PDF <span class="arrow">→</span></a>
-      </div>
     </div>
   </section>
 
