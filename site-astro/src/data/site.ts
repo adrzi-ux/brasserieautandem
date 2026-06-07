@@ -44,7 +44,7 @@ export const SITE = {
   name: 'Brasserie Au Tandem',
   tagline: 'Brasserie · Provence',
   description: 'Guide gastronomie & recettes provençales. Les coulisses d\'une brasserie de village au cœur de la Provence.',
-  url: 'https://brasserieautandem.fr',
+  url: 'https://www.brasserieautandem.fr',
   address: {
     street: 'Place du Cours',
     city: 'Saint-Cannat',
