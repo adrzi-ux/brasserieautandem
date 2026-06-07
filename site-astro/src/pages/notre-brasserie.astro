@@ -6,6 +6,27 @@ import CTABanner from '~/components/CTABanner.astro';
 import Newsletter from '~/components/Newsletter.astro';
 import { SITE } from '~/data/site';
 
+const restaurantJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  name: SITE.name,
+  url: `${SITE.url}/notre-brasserie/`,
+  description: SITE.description,
+  email: SITE.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: SITE.address.street,
+    addressLocality: SITE.address.city,
+    postalCode: SITE.address.zip,
+    addressRegion: SITE.address.region,
+    addressCountry: 'FR',
+  },
+  servesCuisine: ['French', 'Provençal', 'Mediterranean'],
+  priceRange: '€€',
+  areaServed: { '@type': 'AdministrativeArea', name: 'Provence' },
+  sameAs: [`https://www.instagram.com/${SITE.instagram.replace('@', '')}/`],
+};
+
 const entrees = [
   { name: "Tapenade noire d'Aups, fougasse maison", desc: 'Olives de chez Bertaud, anchois, capres.', price: '8 €' },
   { name: 'Soupe au pistou',                        desc: 'Légumes du jardin de Régine, pistou frais.', price: '10 €' },
@@ -32,6 +53,9 @@ const team = [
 ---
 
 <Site title="Notre brasserie" description={`${SITE.name}, ${SITE.address.street}, ${SITE.address.city}. Ouverte dès 6h30. Cuisine provençale traditionnelle.`} activePage="brasserie">
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(restaurantJsonLd)} />
+  </Fragment>
   <section class="fb-hero">
     <div class="bg">
       <img src="/images/au-tandem.png" alt="Brasserie Au Tandem, terrasse au matin" style="width: 100%; height: 100%; object-fit: cover; display: block;" />

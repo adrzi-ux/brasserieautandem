@@ -19,9 +19,33 @@ const FEATURED_RECIPES = [
   ...RECIPES.filter(r => r.category === 'provencales').slice(0, 4),
   ...RECIPES.filter(r => r.category === 'mediterraneennes').slice(0, 2),
 ];
+
+const restaurantJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  name: SITE.name,
+  url: SITE.url,
+  description: SITE.description,
+  email: SITE.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: SITE.address.street,
+    addressLocality: SITE.address.city,
+    postalCode: SITE.address.zip,
+    addressRegion: SITE.address.region,
+    addressCountry: 'FR',
+  },
+  servesCuisine: ['French', 'Provençal', 'Mediterranean'],
+  priceRange: '€€',
+  areaServed: { '@type': 'AdministrativeArea', name: 'Provence' },
+  sameAs: [`https://www.instagram.com/${SITE.instagram.replace('@', '')}/`],
+};
 ---
 
 <Site title="Guide gastronomie & recettes provençales" description="Recettes provençales, accords mets-vins et producteurs du Sud. Un magazine éditorial porté par la Brasserie Au Tandem à Saint-Cannat." activePage="recettes">
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(restaurantJsonLd)} />
+  </Fragment>
   <section class="hero">
     <div class="container">
       <div class="hero-eyebrow-row">
