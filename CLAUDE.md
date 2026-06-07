@@ -71,7 +71,24 @@ openssl rsa -noout -modulus -in /etc/ssl/brasserieautandem/privkey.pem | openssl
 ### GSC
 - Domain property `brasserieautandem.fr` validée (TXT DNS)
 - Sitemap soumis 2026-05-21 → 34 URLs découvertes, traitement réussi
-- Pages indexées : à surveiller dans les 1-4 semaines
+- **Snapshot 2026-05-29 (J+8)** : 2 indexées / 3 non-indexées / ~29 en attente
+- **Diag 2026-06-07** : indexation lente probablement causée par absence canonical → fixé (voir ci-dessous)
+- **Indexation manuelle relancée 2026-06-07** : 3/5 URLs via "Demander indexation" (`/`, `/recettes/`, `/notre-brasserie/`). 2 restantes à refaire le 2026-06-08 (`/recettes-provencales/`, `/accords-mets-vins/`) — quota épuisé
+- **Re-check prévu 2026-06-14** (J+7 des fixes) : attendu 8-15 pages indexées
+
+### 🔧 Fixes SEO 2026-06-07
+Suite au diag GSC (2/34 indexées à J+8), 3 problèmes identifiés + corrigés en prod :
+
+1. **Aucun `<link rel="canonical">`** sur les 36 pages → ajout via `Site.astro` layout (1 ligne, propage partout)
+   - Commit `4c94ae8` — `seo: ajout canonical sur toutes les pages + fix og:url + nettoyage stamp home`
+2. **`og:url` non absolu** (utilisait `Astro.url.href` qui peut être localhost en SSR) → switch vers `new URL(Astro.url.pathname, Astro.site).href`
+3. **`SITE.url` en apex** (utilisé dans JSON-LD `author.url`) → corrigé en www
+4. **Résidu "LA ROQUE-D'ANTHÉRON" dans stamp SVG home** (`index.astro:44`) → remplacé par "SAINT-CANNAT · PROVENCE"
+5. **Aucun JSON-LD Restaurant** sur home + `/notre-brasserie/` → ajout via slot `head` du layout
+   - Commit `aba0846` — `seo: ajout Schema.org Restaurant sur home + /notre-brasserie/`
+   - Adresse fictive Saint-Cannat 13760, cuisine FR/Provençal/Med, areaServed Provence, sameAs Instagram. Pas de téléphone, pas de gérant cité.
+
+⚠️ **Décision branding (2026-06-07)** : malgré la SARL d'origine en dissolution (depuis 2026-01-10), aucune référence aux anciens gérants/adresse réelle ne doit figurer sur le site live. Mémoire : `feedback_remontage_zero_reference_anciens_gerants.md`
 
 ## Contexte
 - **Activité originale** : "Brasserie Au Tandem" (restaurant/brasserie)
