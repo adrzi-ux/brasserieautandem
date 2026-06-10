@@ -1,10 +1,10 @@
 ---
 import Site from '~/layouts/Site.astro';
 import Stamp from '~/components/Stamp.astro';
-import Placeholder from '~/components/Placeholder.astro';
 import CTABanner from '~/components/CTABanner.astro';
 import Newsletter from '~/components/Newsletter.astro';
 import { SITE } from '~/data/site';
+import { TEAM_IMAGES } from '~/data/team-images';
 
 const restaurantJsonLd = {
   '@context': 'https://schema.org',
@@ -46,9 +46,9 @@ const desserts = [
 ];
 
 const team = [
-  { role: 'Cuisine',          name: 'Camille Aubert', quote: '"Je ne cuisine que ce que je connais. Le reste, je l\'apprends en goûtant."', tone: 'warm' as const },
-  { role: 'Écriture & salle', name: 'Léo Pinault',    quote: '"On écrit les recettes comme on parle à un ami au comptoir."', tone: 'cocoa' as const },
-  { role: 'Salle & vin',      name: 'Inès Cabrol',    quote: '"Le bon vin, c\'est celui qui se laisse oublier."', tone: 'rose' as const },
+  { key: 'camille-aubert', role: 'Cuisine',          name: 'Camille Aubert', quote: '"Je ne cuisine que ce que je connais. Le reste, je l\'apprends en goûtant."', tone: 'warm' as const },
+  { key: 'leo-pinault',    role: 'Écriture & salle', name: 'Léo Pinault',    quote: '"On écrit les recettes comme on parle à un ami au comptoir."', tone: 'cocoa' as const },
+  { key: 'ines-cabrol',    role: 'Salle & vin',      name: 'Inès Cabrol',    quote: '"Le bon vin, c\'est celui qui se laisse oublier."', tone: 'rose' as const },
 ];
 ---
 
@@ -210,17 +210,48 @@ const team = [
       </div>
 
       <div class="team-grid">
-        {team.map((m) => (
-          <div class="team-card">
-            <div class="portrait">
-              <Placeholder tone={m.tone} label={`Portrait · ${m.name}`} />
+        {team.map((m) => {
+          const img = TEAM_IMAGES[m.key];
+          return (
+            <div class="team-card">
+              <div class="portrait">
+                {img
+                  ? <img src={img.src} alt={img.alt} style="width:100%;height:100%;object-fit:cover;display:block;" />
+                  : <div style={`width:100%;height:100%;background:var(--cream-warm);`} />
+                }
+              </div>
+              <div class="role">{m.role}</div>
+              <h3 class="name">{m.name}</h3>
+              <div class="quote">{m.quote}</div>
             </div>
-            <div class="role">{m.role}</div>
-            <h3 class="name">{m.name}</h3>
-            <div class="quote">{m.quote}</div>
-          </div>
-        ))}
+          );
+        })}
       </div>
+    </div>
+  </section>
+
+  <section class="section" style="background: var(--cream); padding-bottom: 0;">
+    <div class="container">
+      <div class="section-head" style="margin-bottom: 40px;">
+        <div class="left">
+          <div class="eyebrow"><span class="dot"></span>Nous trouver</div>
+          <h2 class="h-section" style="margin-top: 18px;">
+            Place du Cours, <em class="flourish">Saint-Cannat</em>.
+          </h2>
+        </div>
+        <div class="right">
+          <p class="lede">À 20 min d'Aix-en-Provence, 25 min de Salon-de-Provence.<br/>Parking gratuit Place du Cours.</p>
+        </div>
+      </div>
+    </div>
+    <div style="width: 100%; height: 420px; overflow: hidden; position: relative;">
+      <iframe
+        title="Carte Brasserie Au Tandem, Saint-Cannat"
+        src="https://maps.google.com/maps?q=Saint-Cannat+13760+Bouches-du-Rhone&t=&z=14&ie=UTF8&iwloc=&output=embed"
+        style="width: 100%; height: 100%; border: 0; display: block;"
+        loading="lazy"
+        allowfullscreen
+      ></iframe>
     </div>
   </section>
 

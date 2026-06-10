@@ -7,20 +7,24 @@
 ## 🚀 Site en production (2026-05-21)
 
 ### Stack
-- **Astro 5** static build (36 pages, 5.8 MB) — code dans `site-astro/`
+- **Astro 5** static build (60 pages) — code dans `site-astro/`
+- **WP headless** : `cms.brasserieautandem.fr` → `/var/www/brasserieautandem-wp` (cible Wisewand uniquement)
 - **CSS** : Cormorant Garamond + Inter + JetBrains Mono (Google Fonts)
-- **Images** : 30 photos Pexels API (1 brasserie + 21 recettes + 8 producteurs)
-- **Schema.org Recipe** : JSON-LD sur 24 fiches recettes (rich snippets)
+- **Images** : 30 photos Pexels API (1 brasserie + 21 recettes + 8 producteurs) + 3 portraits équipe
+- **Schema.org Recipe** : JSON-LD sur 24 fiches recettes, champ `image` inclus (obligatoire rich snippets)
 
 ### Infrastructure
 - **VPS** : Contabo `207.180.213.109` (mutualisé avec boutique-catea, dirs séparés)
-- **Webroot** : `/var/www/brasserieautandem/`
-- **Nginx vhost** : `nginx-vhost.conf` (split apex/www avec 301 server-side)
-  - Apex `brasserieautandem.fr` → 301 → `www.brasserieautandem.fr`
-  - www = canonical (cohérent avec `site` dans astro.config.mjs)
+- **Webroot Astro** : `/var/www/brasserieautandem/`
+- **Webroot WP headless** : `/var/www/brasserieautandem-wp/`
+- **Source Astro sur VPS** : `/opt/brasserieautandem-astro/` (pour cron rebuild)
+- **Cron rebuild** : `0 6,18 * * *` → `/opt/rebuild-brasserie.sh` (fetch articles WP + build + rsync)
+- **Logs rebuild** : `/var/log/brasserie-rebuild.log`
+- **Nginx vhosts** :
+  - `brasserieautandem` → site Astro statique (index.html, try_files)
+  - `cms-brasserieautandem` → WP headless PHP 8.2, redirige `/` → `/wp-admin/`
 - **SSL** : Cloudflare Origin Certificate (RSA 2048, valide jusqu'au 2041-05-17)
   - Stocké sur VPS : `/etc/ssl/brasserieautandem/{fullchain,privkey}.pem`
-  - Self-signed backup : `*.selfsigned.pem` (au cas où)
 
 ### Cloudflare
 - **DNS** : NS Cloudflare (ariadne + kipp), comme boutique-catea (même compte)
@@ -42,6 +46,7 @@
 | Institutionnel (11) | `/`, `/recettes/`, `/recettes-{provencales,mediterraneennes,saisonnieres}/`, `/accords-mets-vins/`, `/producteurs-locaux/`, `/notre-brasserie/`, `/a-propos/`, `/contact/` |
 | Légal (2) | `/mentions-legales/`, `/politique-de-cookies-ue/` (slugs Wayback préservés) |
 | Fiches recettes (24) | `/recettes/{slug}/` × 12 Provençales + 9 Méditerranéennes + 3 Saisonnières |
+| Blog Wisewand (23+) | `/blog/` (liste) + `/blog/{slug}/` (articles WP headless, hero = première image contenu) |
 | Redirects 301 | `/notre-carte/` → `/notre-brasserie/`, `/diaporama/` → `/` |
 
 ### Brand info (fictive, vs Wayback original)
@@ -75,6 +80,17 @@ openssl rsa -noout -modulus -in /etc/ssl/brasserieautandem/privkey.pem | openssl
 - **Diag 2026-06-07** : indexation lente probablement causée par absence canonical → fixé (voir ci-dessous)
 - **Indexation manuelle relancée 2026-06-07** : 3/5 URLs via "Demander indexation" (`/`, `/recettes/`, `/notre-brasserie/`). 2 restantes à refaire le 2026-06-08 (`/recettes-provencales/`, `/accords-mets-vins/`) — quota épuisé
 - **Re-check prévu 2026-06-14** (J+7 des fixes) : attendu 8-15 pages indexées
+
+### 🔧 Fixes UX 2026-06-10
+- **Cartes Google Maps** ajoutées sur `/notre-brasserie/` (Saint-Cannat) et `/producteurs-locaux/` (Luberon)
+- **Portraits équipe** : photos Pexels réelles (fichiers `public/images/team/`) remplacent les placeholders
+- **X-Frame-Options retiré** du nginx (bloquait les iframes Google Maps)
+- **WP headless** `cms.brasserieautandem.fr` configuré + Wisewand connecté (user: adrien)
+- **Blog `/blog/`** : 23+ articles Wisewand, hero = featured_media WP ou première img contenu non-screenshot
+- **Cron rebuild** 6h+18h : `/opt/rebuild-brasserie.sh` → build Astro + rsync vers webroot
+
+### 🔧 Fixes SEO 2026-06-10
+- **Recipe JSON-LD `image`** : champ manquant sur 6 recettes → corrigé, validation GSC lancée
 
 ### 🔧 Fixes SEO 2026-06-07
 Suite au diag GSC (2/34 indexées à J+8), 3 problèmes identifiés + corrigés en prod :

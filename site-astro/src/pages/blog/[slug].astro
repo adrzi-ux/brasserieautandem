@@ -1,0 +1,138 @@
+---
+import Site from '~/layouts/Site.astro';
+import CTABanner from '~/components/CTABanner.astro';
+import Newsletter from '~/components/Newsletter.astro';
+import { SITE } from '~/data/site';
+
+const CMS = 'https://cms.brasserieautandem.fr';
+
+export async function getStaticPaths() {
+  const CMS = 'https://cms.brasserieautandem.fr';
+  const res = await fetch(`${CMS}/wp-json/wp/v2/posts?per_page=100&_fields=slug`);
+  const posts = await res.json();
+  return posts.map((p: any) => ({ params: { slug: p.slug } }));
+}
+
+const { slug } = Astro.params;
+const res = await fetch(`${CMS}/wp-json/wp/v2/posts?slug=${slug}&_fields=id,slug,title,excerpt,date,content,modified,featured_media`);
+const [post] = await res.json();
+
+// Récupérer l'image de couverture (featured_media ou première img dans le contenu)
+let heroImage: { src: string; alt: string } | null = null;
+if (post?.featured_media) {
+  try {
+    const mediaRes = await fetch(`${CMS}/wp-json/wp/v2/media/${post.featured_media}?_fields=source_url,alt_text`);
+    const media = await mediaRes.json();
+    if (media.source_url) heroImage = { src: media.source_url, alt: media.alt_text || post.title?.rendered || '' };
+  } catch {}
+}
+if (!heroImage && post?.content?.rendered) {
+  const match = post.content.rendered.match(/<img[^>]+src=["']([^"']+)["']/i);
+  if (match) heroImage = { src: match[1], alt: post.title?.rendered || '' };
+}
+
+if (!post) return Astro.redirect('/blog/', 302);
+
+function formatDate(iso: string) {
+  return new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+function stripHtml(html: string) {
+  return html.replace(/<[^>]+>/g, '').replace(/&rsquo;/g, "'").replace(/&amp;/g, '&').replace(/&hellip;/g, '…').trim();
+}
+
+const description = stripHtml(post.excerpt.rendered).substring(0, 160);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.title.rendered,
+  description,
+  datePublished: post.date,
+  dateModified: post.modified,
+  author: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+  publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE.url}/blog/${slug}/` },
+};
+---
+
+<Site title={post.title.rendered} description={description} activePage="recettes">
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </Fragment>
+
+  {heroImage && (
+    <section class="fb-hero" style="height: clamp(320px, 42vh, 520px);">
+      <div class="bg">
+        <img src={heroImage.src} alt={heroImage.alt} style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="container">
+        <div style="position: relative; margin-top: auto;">
+          <div class="eyebrow" style="color: rgba(245,239,224,0.75); margin-bottom: 16px;">
+            <span class="dot" style="background: rgba(245,239,224,0.75);"></span>
+            <a href="/blog/" style="color: inherit; text-decoration: none;">Le journal</a>
+            &nbsp;·&nbsp; {formatDate(post.date)}
+          </div>
+          <h1 class="h-page" style="max-width: 20ch;">{post.title.rendered}</h1>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {!heroImage && (
+    <section class="section" style="padding-top: 60px; padding-bottom: 0;">
+      <div class="container">
+        <div style="max-width: 760px;">
+          <div class="eyebrow" style="margin-bottom: 20px;">
+            <span class="dot"></span>
+            <a href="/blog/" style="color: inherit; text-decoration: none;">Le journal</a>
+            &nbsp;·&nbsp; {formatDate(post.date)}
+          </div>
+          <h1 class="h-page" style="max-width: 20ch;">{post.title.rendered}</h1>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="section">
+    <div class="container">
+      <div style="max-width: 760px;">
+        <div class="article-body" set:html={post.content.rendered} />
+      </div>
+    </div>
+  </section>
+
+  <CTABanner />
+  <Newsletter />
+</Site>
+
+<style>
+  .article-body {
+    font-family: var(--serif);
+    font-size: clamp(17px, 1.7vw, 20px);
+    line-height: 1.7;
+    color: var(--ink);
+  }
+  .article-body p { margin-bottom: 1.4em; }
+  .article-body h2 {
+    font-size: clamp(20px, 2vw, 26px);
+    font-weight: 500;
+    margin: 2em 0 0.6em;
+    color: var(--ink);
+  }
+  .article-body h3 {
+    font-size: clamp(17px, 1.7vw, 21px);
+    font-weight: 500;
+    margin: 1.6em 0 0.5em;
+  }
+  .article-body ul, .article-body ol {
+    padding-left: 1.4em;
+    margin-bottom: 1.4em;
+  }
+  .article-body li { margin-bottom: 0.4em; }
+  .article-body strong { font-weight: 600; }
+  .article-body em { font-style: italic; }
+  .article-body a { color: var(--terracotta); text-decoration: underline; text-decoration-color: transparent; }
+  .article-body a:hover { text-decoration-color: currentColor; }
+  .article-body img { max-width: 100%; height: auto; margin: 2em 0; }
+</style>

@@ -68,6 +68,7 @@ const jsonLd = {
     text: step,
     position: i + 1,
   })),
+  ...(RECIPE_IMAGES[recipe.slug] ? { image: [`${SITE.url}${RECIPE_IMAGES[recipe.slug].src}`] } : {}),
 };
 
 const tipsCols = Math.min(recipe.tips.length, 3);

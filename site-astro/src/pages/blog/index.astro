@@ -1,0 +1,70 @@
+---
+import Site from '~/layouts/Site.astro';
+import CTABanner from '~/components/CTABanner.astro';
+import Newsletter from '~/components/Newsletter.astro';
+
+const CMS = 'https://cms.brasserieautandem.fr';
+
+let posts: any[] = [];
+try {
+  const res = await fetch(`${CMS}/wp-json/wp/v2/posts?per_page=100&_fields=id,slug,title,excerpt,date&orderby=date&order=desc`);
+  posts = await res.json();
+} catch (e) {
+  posts = [];
+}
+
+function formatDate(iso: string) {
+  return new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+function stripHtml(html: string) {
+  return html.replace(/<[^>]+>/g, '').replace(/&rsquo;/g, "'").replace(/&amp;/g, '&').replace(/&hellip;/g, '…').trim();
+}
+---
+
+<Site title="Le journal" description="Recettes, saisons, producteurs — les articles de la Brasserie Au Tandem." activePage="recettes">
+  <section class="section" style="padding-top: 60px; padding-bottom: 40px;">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 80px; align-items: end;">
+        <h1 class="h-page">
+          Le journal<br />
+          <em>de la brasserie</em>.
+        </h1>
+        <p class="lede" style="max-width: 42ch;">
+          Recettes de saison, portraits de producteurs, accords mets-vins.
+          Mis à jour chaque semaine depuis Saint-Cannat.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      {posts.length === 0 ? (
+        <p style="color: var(--ink-soft); font-size: 18px;">Aucun article pour l'instant.</p>
+      ) : (
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(24px, 2.4vw, 40px);">
+          {posts.map((post) => (
+            <a href={`/blog/${post.slug}/`} style="text-decoration: none; color: inherit; display: block; border-top: 1px solid var(--rule); padding-top: 24px;">
+              <div class="eyebrow" style="margin-bottom: 12px;">
+                <span class="dot"></span>{formatDate(post.date)}
+              </div>
+              <h2 style="font-family: var(--serif); font-size: clamp(18px, 1.8vw, 22px); font-weight: 500; line-height: 1.3; margin-bottom: 12px; color: var(--ink);">
+                {post.title.rendered}
+              </h2>
+              <p style="font-size: 15px; color: var(--ink-soft); line-height: 1.55; margin-bottom: 16px;">
+                {stripHtml(post.excerpt.rendered).substring(0, 120)}…
+              </p>
+              <span style="font-size: 13px; font-family: var(--mono); color: var(--terracotta); letter-spacing: 0.04em;">
+                Lire →
+              </span>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <CTABanner />
+  <Newsletter />
+</Site>

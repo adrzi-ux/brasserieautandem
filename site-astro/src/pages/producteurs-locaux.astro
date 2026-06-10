@@ -37,8 +37,14 @@ const filters = ['Tous', "Huile d'olive", 'Fromages', 'Charcuterie', 'Vins', 'He
 
   <section class="section" style="padding-top: 24px; padding-bottom: 30px;">
     <div class="container">
-      <div class="map-block" style="aspect-ratio: 16/9; position: relative;">
-        <Placeholder tone="olive" label="Carte du Luberon · Cucuron — Lourmarin — Pertuis — Ansouis" />
+      <div class="map-block" style="aspect-ratio: 16/9; position: relative; overflow: hidden;">
+        <iframe
+          title="Carte des producteurs du Luberon"
+          src="https://maps.google.com/maps?q=Luberon+Vaucluse+France&t=&z=11&ie=UTF8&iwloc=&output=embed"
+          style="width: 100%; height: 100%; border: 0; display: block;"
+          loading="lazy"
+          allowfullscreen
+        ></iframe>
         {producers.map((p, i) => (
           <span class="map-pin" style={`left: ${p.x}; top: ${p.y};`}>{i + 1}</span>
         ))}
