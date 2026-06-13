@@ -4,6 +4,31 @@
 ✓ **ACHETÉ le 2026-05-19** — premier batch du projet remontage expired.
 ✓ **EN PRODUCTION le 2026-05-21** — site Astro statique, 36 pages live sur `https://www.brasserieautandem.fr`
 
+## 🔧 À FAIRE — Session 2026-06-01
+
+### 1. Déployer le fix Schema.org (PRIORITÉ HAUTE)
+Branche `claude/github-file-reading-vTML6` contient le correctif GSC.
+
+**Ce qui a été corrigé :**
+- Champ `image` ajouté dans le JSON-LD Recipe sur toutes les fiches recettes → débloque les rich snippets Google
+- `SITE.url` corrigé (`https://brasserieautandem.fr` → `https://www.brasserieautandem.fr`)
+
+**Commandes à lancer depuis ta machine locale :**
+```bash
+git pull origin claude/github-file-reading-vTML6
+git checkout master
+git merge claude/github-file-reading-vTML6
+cd site-astro && npm run build
+scp -i ~/.ssh/boutique-catea -r dist/* root@207.180.213.109:/var/www/brasserieautandem/
+ssh -i ~/.ssh/boutique-catea root@207.180.213.109 "chown -R www-data:www-data /var/www/brasserieautandem"
+```
+
+**Après déploiement :** retester dans Google Rich Results Test sur `/recettes/risotto-feves-menthe/` — doit passer au vert.
+
+### 2. GSC — Pages non indexées
+- "Introuvable (404)" : identifier quelle URL via GSC → Couverture → Introuvable, puis créer redirect Nginx si nécessaire
+- "Détectée, non indexée" : attendre, site trop récent (11 jours au 01/06/2026)
+
 ## 🚀 Site en production (2026-05-21)
 
 ### Stack
